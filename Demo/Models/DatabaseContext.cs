@@ -116,9 +116,14 @@ namespace Demo.Models
 
                 entity.ToTable("Credential");
 
+                entity.HasIndex(e => e.Email, "Credential_Email_uindex")
+                    .IsUnique();
+
                 entity.Property(e => e.ActivationCode).IsUnicode(false);
 
-                entity.Property(e => e.Email).IsUnicode(false);
+                entity.Property(e => e.Email)
+                    .HasMaxLength(125)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Password).IsUnicode(false);
 

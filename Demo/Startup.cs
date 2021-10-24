@@ -34,6 +34,7 @@ namespace Demo
 				option.UseLazyLoadingProxies().UseSqlServer(connectionString));
 
 			services.AddScoped<IRoleService, RoleService>();
+			services.AddScoped<ICredentialService, CredentialService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
