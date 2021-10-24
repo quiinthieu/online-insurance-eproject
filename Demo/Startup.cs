@@ -1,10 +1,14 @@
+using Demo.Models;
+using Demo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace Demo
 {
@@ -23,6 +27,13 @@ namespace Demo
 			services.AddControllersWithViews();
 			// In production, the Angular files will be served from this directory
 			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
+
+			var connectionString = Configuration["ConnectionStrings:DefaultConnection"].ToString();
+
+			services.AddDbContext<DatabaseContext>(option =>
+				option.UseLazyLoadingProxies().UseSqlServer(connectionString));
+
+			services.AddScoped<IRoleService, RoleService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +52,7 @@ namespace Demo
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
+			
 			if (!env.IsDevelopment())
 			{
 				app.UseSpaStaticFiles();
