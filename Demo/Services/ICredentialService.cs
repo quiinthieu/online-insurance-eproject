@@ -1,4 +1,6 @@
 ﻿using Demo.Models;
+using System.Collections.Generic;
+using Claim = System.Security.Claims.Claim;
 
 namespace Demo.Services
 {
@@ -12,8 +14,11 @@ namespace Demo.Services
 		
 		// Used to create new credential
 		public dynamic Create(Credential credential);
-		
-		
+
+
+		public IEnumerable<Claim> GetUserClaims(dynamic credential);//chua 1 phan thong tin tai khoan
+
+
 
 	}
 }
