@@ -9,6 +9,7 @@ namespace Demo.Models
         public int? CustomerPolicyId { get; set; }
         public decimal? Amount { get; set; }
         public DateTime? PaidDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
         public virtual CustomerPolicy CustomerPolicy { get; set; }
     }

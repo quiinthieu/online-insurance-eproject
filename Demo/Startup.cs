@@ -28,7 +28,7 @@ namespace Demo
 		{
 			services.AddControllersWithViews();
 			// In production, the Angular files will be served from this directory
-			/*services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });*/
+			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			   .AddCookie(option => {
@@ -76,7 +76,7 @@ namespace Demo
 					pattern: "{controller}/{action=Index}/{id?}");
 			});
 
-/*			app.UseSpa(spa =>
+			app.UseSpa(spa =>
 			{
 				// To learn more about options for serving an Angular SPA from ASP.NET Core,
 				// see https://go.microsoft.com/fwlink/?linkid=864501
@@ -87,7 +87,7 @@ namespace Demo
 				{
 					spa.UseAngularCliServer(npmScript: "start");
 				}
-			});*/
+			});
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Demo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Services
 {
@@ -27,6 +28,21 @@ namespace Demo.Services
 				role.Id,
 				role.Name
 			}).SingleOrDefault(role => role.Id == id);
+		}
+
+		public dynamic Create(Role role)
+		{
+			_databaseContext.Roles.Add(role);
+			_databaseContext.SaveChanges();
+			return role;
+		}
+
+		public dynamic Update(Role role)
+		{
+			_databaseContext.Roles.Add(role);
+			_databaseContext.Entry(role).State = EntityState.Modified;
+			_databaseContext.SaveChanges();
+			return role;
 		}
 	}
 }

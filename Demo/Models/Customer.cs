@@ -13,9 +13,6 @@ namespace Demo.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime? Birthday { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public byte? Status { get; set; }
         public string Gender { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
@@ -23,6 +20,7 @@ namespace Demo.Models
         public string ZipCode { get; set; }
         public string Occupation { get; set; }
         public int? CredentialId { get; set; }
+        public string CitizenId { get; set; }
 
         public virtual Credential Credential { get; set; }
         public virtual ICollection<CustomerPolicy> CustomerPolicies { get; set; }

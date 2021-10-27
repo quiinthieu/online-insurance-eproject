@@ -18,8 +18,6 @@ namespace Demo.Models
         public DateTime? EndDate { get; set; }
         public int? PremiumTypeId { get; set; }
         public decimal? PremiumAmount { get; set; }
-        public string BeneficiaryName { get; set; }
-        public string Relation { get; set; }
         public int? AgentId { get; set; }
 
         public virtual Agent Agent { get; set; }

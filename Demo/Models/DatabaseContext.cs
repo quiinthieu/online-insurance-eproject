@@ -27,6 +27,14 @@ namespace Demo.Models
         public virtual DbSet<PremiumType> PremiumTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=.;Database=ONLINEINSURANCE;user id=developer;password=password");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -135,17 +143,17 @@ namespace Demo.Models
 
                 entity.Property(e => e.Birthday).HasColumnType("date");
 
-                entity.Property(e => e.City).IsUnicode(false);
+                entity.Property(e => e.CitizenId)
+                    .HasMaxLength(12)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.Email).IsUnicode(false);
+                entity.Property(e => e.City).IsUnicode(false);
 
                 entity.Property(e => e.Gender).IsUnicode(false);
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
                 entity.Property(e => e.Occupation).IsUnicode(false);
-
-                entity.Property(e => e.Password).IsUnicode(false);
 
                 entity.Property(e => e.State).IsUnicode(false);
 
@@ -167,13 +175,9 @@ namespace Demo.Models
 
                 entity.ToTable("CustomerPolicy");
 
-                entity.Property(e => e.BeneficiaryName).IsUnicode(false);
-
                 entity.Property(e => e.EndDate).HasColumnType("date");
 
                 entity.Property(e => e.PremiumAmount).HasColumnType("money");
-
-                entity.Property(e => e.Relation).IsUnicode(false);
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
 
@@ -217,9 +221,11 @@ namespace Demo.Models
                     .HasName("InsurancePlan_pk")
                     .IsClustered(false);
 
-                entity.ToTable("Policy");
+                entity.ToTable("PolicyService");
 
                 entity.Property(e => e.Amount).HasColumnType("money");
+
+                entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
@@ -238,6 +244,8 @@ namespace Demo.Models
                 entity.ToTable("PremiumTransaction");
 
                 entity.Property(e => e.Amount).HasColumnType("money");
+
+                entity.Property(e => e.DueDate).HasColumnType("date");
 
                 entity.Property(e => e.PaidDate).HasColumnType("date");
 
