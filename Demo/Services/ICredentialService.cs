@@ -15,6 +15,12 @@ namespace Demo.Services
 		// Used to create new credential
 		public dynamic Create(Credential credential);
 
+		public dynamic Update(Credential credential);
+
+		public dynamic FindAll();
+
+		public dynamic FindById(int id);
+
 
 		public IEnumerable<Claim> GetUserClaims(dynamic credential);//chua 1 phan thong tin tai khoan
 

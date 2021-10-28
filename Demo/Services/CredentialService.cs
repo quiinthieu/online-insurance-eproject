@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using BCrypt.Net;
 using Demo.Models;
+using Microsoft.EntityFrameworkCore;
 using Claim = System.Security.Claims.Claim;
 
 namespace Demo.Services
@@ -68,6 +69,42 @@ namespace Demo.Services
             _databaseContext.Credentials.Add(credential);
             _databaseContext.SaveChanges();
             return credential;
+        }
+        
+        // For customers or agent to update customers' profile
+        public dynamic Update(Credential credential)
+        {
+            _databaseContext.Credentials.Add(credential);
+            _databaseContext.Entry(credential).State = EntityState.Modified;
+            _databaseContext.SaveChanges();
+            return credential;
+        }
+        
+        // For agent to view the list of customers
+        public dynamic FindAll()
+        {
+            return _databaseContext.Credentials.Select(credential => new
+            {
+                credential.Email,
+                credential.Status,
+                credential.RoleId,
+                RoleName = credential.Role.Name,
+                credential.ActivationCode
+            });
+        }
+        
+        // For agent to find a specific customer using his or her id
+        public dynamic FindById(int id)
+        {
+            return _databaseContext.Credentials.Select(credential => new
+            {
+                credential.Id,
+                credential.Email,
+                credential.Status,
+                credential.RoleId,
+                RoleName = credential.Role.Name,
+                credential.ActivationCode
+            }).SingleOrDefault(credential => credential.Id == id);
         }
 
         public IEnumerable<Claim> GetUserClaims(dynamic credential)
