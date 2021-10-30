@@ -1,25 +1,40 @@
-export function initJquery(){
+/*
+	Template Name: VRocket - HTML5 Hosting Template
+	Author: Nifty Theme - Osama Bakri
+	Themeforest Account: https://themeforest.net/user/niftytheme
+	Contact: niftytheme@gmail.com
+	Version: 1.4.0
+  Page Name : Custom JavaScript File
+	Created: 30 September 2019
+	License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+*/
+
+/*global window, jQuery */
+export function initJquery() {
+
+    'use strict';
+
     // -- :: Loading Page
-    $(window).on('load', function () {
+    /*$(window).on('load', function () {
         $('#loading').fadeOut(1000);
         $('html').css('overflow-y', 'visible');
-    });
+    });*/
     // ----------------------------------
 
     // -- :: Navbar
-    $(window).on('scroll', function () {
+    /*$(window).on('scroll', function () {
         if($(window).scrollTop() > 10 ) {
             $('nav').addClass('scrolled');
         } else {
             $('nav').removeClass('scrolled');
         }
-    });
+    });*/
 
-    $('nav button').on('click', function() {
+    /*$('nav button').on('click', function() {
         $($(this).data('target')).fadeToggle();
-    });
+    });*/
 
-    $(document).ready(function () {
+    /*$(document).ready(function () {
         if ($(document).width() < 974) {
             // Add slideDown animation to Bootstrap dropdown when expanding.
             $('.dropdown').on('show.bs.dropdown', function() {
@@ -33,12 +48,12 @@ export function initJquery(){
         } else {
             return false;
         }
-    });
+    });*/
     // ----------------------------------------------------------
 
     // -- :: Footer
     // Language Menu
-    $('#lang-btn').on('click', function () {
+    /*$('#lang-btn').on('click', function () {
         $('footer .copyright .language-menu .menu').toggleClass('show');
     });
     $(document).mouseup(function (e) {
@@ -48,30 +63,30 @@ export function initJquery(){
         if (!container.is(e.target) && container.has(e.target).length === 0) {
             container.removeClass('show');
         }
-    });
+    });*/
 
     // ----------------------------------
 
     // -- :: Index Page
 
     // Hosting Section
-    $('#index_page .hosting .host-taps li').on('click', function () {
+    /*$('#index-page .hosting .host-taps li').on('click', function () {
         $(this).addClass('active').siblings().removeClass('active');
         $('.host-item').hide();
         $($(this).data('show')).show();
         return false;
     });
 
-    $('#index_page .hosting .host-taps .s-toggler .check').on('click', function () {
+    $('#index-page .hosting .host-taps .s-toggler .check').on('click', function () {
         $(this).parents('.s-toggler').find('.toggler').toggleClass('toggler--is-active');
-        $('#index_page .hosting .host-items-contain').toggleClass('active--section');
+        $('#index-page .hosting .host-items-contain').toggleClass('active--section');
     });
 
     // Section IX ( Boxes Nav )
     $('.se-ix ul.boxes-nav li').on('click', function() {
         $(this).addClass('active').siblings().removeClass('active');
         $($(this).data('box')).fadeIn().siblings().hide();
-    });
+    });*/
     // ----------------------------------
 
     // -- :: VPS Page
@@ -102,7 +117,7 @@ export function initJquery(){
 
     // -- :: Login Page
     // Input Verification
-    $('#login-page #password-btn').on('click', function () {
+    /*$('#login-page #password-btn').on('click', function () {
         // toggle eye icon
         $('#login-page #password-btn i').toggleClass('fa-eye-slash');
         var inputField = $('#password-input');
@@ -114,15 +129,15 @@ export function initJquery(){
         } else {
             $(inputField).attr("type", "password");
         }
-    });
+    });*/
     // ----------------------------------
 
     // -- :: About Us Page
     // Hide Information card
-    $('#index_page .our-team .item .card-c').fadeOut(0);
+    /*$('#about-us-page .our-team .item .card-c').fadeOut(0);
 
     // Show Information Card
-    $('#index_page .our-team .item > span, .our-team .item > img').on('click', function () {
+    $('#about-us-page .our-team .item > span, .our-team .item > img').on('click', function () {
         $(this).parents('.item').find('.card-c').fadeIn();
         // add overflow hidden to html
         if ($('html').hasClass('overflow-h') !== true) {
@@ -130,10 +145,10 @@ export function initJquery(){
         } else {
             return false;
         }
-    });
+    });*/
 
     // Hide Information Card
-    $('#index_page .our-team .item .team-card button').on('click', function () {
+    $('#about-us-page .our-team .item .team-card button').on('click', function () {
         $(this).parents('.card-c').fadeOut();
         // remove overflow hidden to html
         if ($('html').hasClass('overflow-h') == true) {
@@ -144,7 +159,7 @@ export function initJquery(){
     });
 
     // Map Section
-    $("#index_page .flag").on('click', function () {
+    $("#about-us-page .flag").on('click', function () {
         $('.flag').removeClass('open');
         $(this).addClass('open');
     });
@@ -155,4 +170,5 @@ export function initJquery(){
             flag_con.removeClass('open');
         }
     });
+
 }

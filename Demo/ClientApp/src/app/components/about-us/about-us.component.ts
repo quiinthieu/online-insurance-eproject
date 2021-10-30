@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {initJquery} from '../../../assets/js/custom/javaScript';
-import {init} from "protractor/built/launcher";
+import * as $ from 'jquery';
+
 
 @Component({
     templateUrl: './about-us.component.html',
@@ -12,7 +12,26 @@ export class AboutUsComponent implements OnInit {
     }
 
     ngOnInit() {
-        initJquery();
+        this.loadScript();
     }
+
+    loadScript() {
+        // -- :: About Us Page
+        // Hide Information card
+        $('#about-us-page .our-team .item .card-c').fadeOut(0);
+
+        // Show Information Card
+        $('#about-us-page .our-team .item > span, .our-team .item > img').on('click', function () {
+            $(this).parents('.item').find('.card-c').fadeIn();
+            // add overflow hidden to html
+            if ($('html').hasClass('overflow-h') !== true) {
+                $('html').addClass('overflow-h');
+            } else {
+                return false;
+            }
+        });
+    }
+
+
 
 }

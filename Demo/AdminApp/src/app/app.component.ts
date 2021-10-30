@@ -9,24 +9,25 @@ import {locale as deLang} from './modules/i18n/vocabs/de';
 import {locale as frLang} from './modules/i18n/vocabs/fr';
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'body[root]',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    // tslint:disable-next-line:component-selector
+    selector: 'body[root]',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  constructor(private translationService: TranslationService) {
-    // register translations
-    this.translationService.loadTranslations(
-      enLang,
-      chLang,
-      esLang,
-      jpLang,
-      deLang,
-      frLang
-    );
-  }
+    constructor(private translationService: TranslationService) {
+        // register translations
+        this.translationService.loadTranslations(
+            enLang,
+            chLang,
+            esLang,
+            jpLang,
+            deLang,
+            frLang
+        );
+    }
 
-  ngOnInit() {}
+    ngOnInit() {
+    }
 }
