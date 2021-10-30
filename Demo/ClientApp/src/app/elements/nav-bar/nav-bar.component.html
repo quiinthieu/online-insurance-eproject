@@ -10,7 +10,7 @@
                     <!-- news -->
                     <div class="news">
                         <span class="stat text-uppercase">new</span>
-                        <a href="#">Dedicated Servers Host multiple wesites and</a>
+                        <a [routerLink]="['/health-insurance']">COVID-19 Insurance Policy</a>
                     </div>
                 </div>
 
@@ -18,18 +18,18 @@
                 <div class="col-6">
                     <!-- links -->
                     <ul class="links list-unstyled mb-0 d-flex align-items-center justify-content-end">
-                        <li>
+                        <!--<li>
                             <a href="#">Docs</a>
-                        </li>
-                        <li>
+                        </li>-->
+                        <!--<li>
                             <a [routerLink]="['/about-us']">About Us</a>
-                        </li>
-                        <li>
+                        </li>-->
+                        <!--<li>
                             <a href="#">Sitemap</a>
-                        </li>
-                        <li>
+                        </li>-->
+                        <!--<li>
                             <a [routerLink]="['/login']">Login</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
 
@@ -39,7 +39,7 @@
     <!-- navbar content -->
     <div class="container">
         <!-- brand -->
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" [routerLink]="['/']">
             <img src="./assets/images/logoFile/logo-w.png" class="img-fluid d-lg-block d-none" alt="VRocket">
             <img src="./assets/images/logoFile/logo-b.png" class="img-fluid d-lg-none d-block" alt="VRocket">
         </a>
@@ -58,16 +58,16 @@
 
                 <!-- nav item -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Domains</a>
+                    <a class="nav-link" [routerLink]="['about-us']">About Us</a>
                 </li>
 
                 <!-- nav item -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-capitalize" href="#" id="navbarDropdown1" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">hosting</a>
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">insurance</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
 
-                        <a class="dropdown-item text-capitalize" [routerLink]="['life-insurance']">
+                        <a class="dropdown-item text-capitalize" [routerLink]="['/life-insurance']">
                             <div class="d-flex align-items-center justify-content-start">
                                 <img src="./assets/images/icons/blue/server-01.svg"
                                      class="img-fluid d-lg-block d-none" alt="img">
@@ -100,12 +100,12 @@
                             </div>
                         </a>
 
-                        <a class="dropdown-item text-capitalize" href="#">
+                        <a class="dropdown-item text-capitalize" [routerLink]="['/home-insurance']">
                             <div class="d-flex align-items-center justify-content-start">
                                 <img src="./assets/images/icons/blue/server-04.svg"
                                      class="img-fluid d-lg-block d-none" alt="img">
                                 <div>
-                                    <span class="name d-block">dedicated hosting</span>
+                                    <span class="name d-block">home insurance</span>
                                     <span class="des d-lg-block d-none">Performance, Security</span>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                 </li>
 
                 <!-- nav item -->
-                <li class="nav-item dropdown">
+                <!--<li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-capitalize" href="#" id="navbarDropdown2" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">company</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
@@ -143,17 +143,17 @@
                         </a>
 
                     </div>
-                </li>
+                </li>-->
 
                 <!-- nav item -->
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
-                </li>
+                </li>-->
 
                 <!-- nav item -->
-                <li class="nav-item d-lg-none">
+                <!--<li class="nav-item d-lg-none">
                     <a class="nav-link" href="#">Docs</a>
-                </li>
+                </li>-->
 
                 <!-- nav item -->
                 <li class="nav-item d-lg-none">
@@ -161,9 +161,9 @@
                 </li>
 
                 <!-- nav item -->
-                <li class="nav-item d-lg-none">
+                <!--<li class="nav-item d-lg-none">
                     <a class="nav-link" href="#">Sitemap</a>
-                </li>
+                </li>-->
 
                 <!-- nav item -->
                 <li class="nav-item">
