@@ -1,3 +1,4 @@
+using System.IO;
 using Demo.Middlewares;
 using Demo.Models;
 using Demo.Services;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 namespace Demo
@@ -27,8 +29,9 @@ namespace Demo
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
+			
 			// In production, the Angular files will be served from this directory
-			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
+			/*services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });*/
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			   .AddCookie(option => {
@@ -76,7 +79,42 @@ namespace Demo
 					pattern: "{controller}/{action=Index}/{id?}");
 			});
 
-			app.UseSpa(spa =>
+			app.Map("/admin", adminApp =>
+			{
+				adminApp.UseSpa(spa =>
+				{
+					spa.Options.SourcePath = "AdminApp";
+					spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
+					{
+						FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "AdminApp"))
+					};
+					if (env.IsDevelopment())
+					{
+						spa.UseAngularCliServer(npmScript: "start");
+					}
+					
+				});
+			});
+
+			app.Map("", client =>
+			{
+				client.UseSpa(spa =>
+				{
+					spa.Options.SourcePath = "ClientApp";
+					spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
+					{
+						FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "ClientApp"))
+					};
+					if (env.IsDevelopment())
+					{
+						spa.UseAngularCliServer(npmScript: "start");
+					}
+				});
+				
+				
+			});
+
+			/*app.UseSpa(spa =>
 			{
 				// To learn more about options for serving an Angular SPA from ASP.NET Core,
 				// see https://go.microsoft.com/fwlink/?linkid=864501
@@ -87,7 +125,7 @@ namespace Demo
 				{
 					spa.UseAngularCliServer(npmScript: "start");
 				}
-			});
+			});*/
 		}
 	}
 }
