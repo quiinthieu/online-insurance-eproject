@@ -30,8 +30,32 @@ export class AboutUsComponent implements OnInit {
                 return false;
             }
         });
-    }
 
+        // Hide Information Card
+        $('#about-us-page .our-team .item .team-card button').on('click', function () {
+            $(this).parents('.card-c').fadeOut();
+            // remove overflow hidden to html
+            if ($('html').hasClass('overflow-h') == true) {
+                $('html').removeClass('overflow-h');
+            } else {
+                return false;
+            }
+        });
+
+
+        // Map Section
+        $("#about-us-page .flag").on('click', function () {
+            $('.flag').removeClass('open');
+            $(this).addClass('open');
+        });
+        $(document).mouseup(function (e) {
+            var flag_con = $(".flag");
+            // if the target of the click isn't the container nor a descendant of the container
+            if (!flag_con.is(e.target) && flag_con.has(e.target).length === 0) {
+                flag_con.removeClass('open');
+            }
+        });
+    }
 
 
 }

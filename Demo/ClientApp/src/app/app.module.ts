@@ -30,6 +30,11 @@ import {FooterComponent} from "./elements/footer/footer.component";
 import {NewsletterBarComponent} from "./elements/newsletter-bar/newsletter-bar.component";
 import {LoginFormComponent} from "./elements/login-form/login-form.component";
 import {LogoContainerComponent} from "./elements/logo-container/logo-container.component";
+import {MapComponent} from "./elements/map/map.component";
+import {OurHistoryComponent} from "./elements/our-history/our-history.component";
+import {AboutUsHeaderComponent} from "./elements/about-us-header/about-us-header.component";
+import {OurTeam1Component} from "./elements/our-team1/our-team1.component";
+import {CallToActionComponent} from "./elements/call-to-action/call-to-action.component";
 
 @NgModule({
     declarations: [
@@ -51,7 +56,12 @@ import {LogoContainerComponent} from "./elements/logo-container/logo-container.c
         FooterComponent,
         NewsletterBarComponent,
         LoginFormComponent,
-        LogoContainerComponent
+        LogoContainerComponent,
+        MapComponent,
+        OurHistoryComponent,
+        AboutUsHeaderComponent,
+        OurTeam1Component,
+        CallToActionComponent
     ],
     imports: [
         BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
