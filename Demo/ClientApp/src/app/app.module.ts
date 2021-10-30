@@ -35,6 +35,7 @@ import {AboutUsHeaderComponent} from "./elements/about-us-header/about-us-header
 import {OurTeam1Component} from "./elements/our-team1/our-team1.component";
 import {CallToActionComponent} from "./elements/call-to-action/call-to-action.component";
 import {ContactUsHeaderComponent} from "./elements/contact-us-header/contact-us-header.component";
+import {ContactUsFormComponent} from "./elements/contact-us-form/contact-us-form.component";
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import {ContactUsHeaderComponent} from "./elements/contact-us-header/contact-us-
         AboutUsHeaderComponent,
         OurTeam1Component,
         CallToActionComponent,
-        ContactUsHeaderComponent
+        ContactUsHeaderComponent,
+        ContactUsFormComponent
     ],
     imports: [
         BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
