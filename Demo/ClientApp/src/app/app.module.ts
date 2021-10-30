@@ -5,7 +5,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 
 import {AppComponent} from './app.component';
-import {NavMenuComponent} from './components/nav-menu/nav-menu.component';
 import {HomeComponent} from './components/home/home.component';
 
 import {FetchDataComponent} from './components/fetch-data/fetch-data.component';
@@ -35,11 +34,11 @@ import {OurHistoryComponent} from "./elements/our-history/our-history.component"
 import {AboutUsHeaderComponent} from "./elements/about-us-header/about-us-header.component";
 import {OurTeam1Component} from "./elements/our-team1/our-team1.component";
 import {CallToActionComponent} from "./elements/call-to-action/call-to-action.component";
+import {ContactUsHeaderComponent} from "./elements/contact-us-header/contact-us-header.component";
 
 @NgModule({
     declarations: [
         AppComponent,
-        NavMenuComponent,
         HomeComponent,
         FetchDataComponent,
         AboutUsComponent,
@@ -61,7 +60,8 @@ import {CallToActionComponent} from "./elements/call-to-action/call-to-action.co
         OurHistoryComponent,
         AboutUsHeaderComponent,
         OurTeam1Component,
-        CallToActionComponent
+        CallToActionComponent,
+        ContactUsHeaderComponent
     ],
     imports: [
         BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),

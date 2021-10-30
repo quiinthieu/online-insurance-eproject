@@ -4,7 +4,7 @@ header {
     padding: 260px 0 180px;
     position: relative;
     overflow: hidden;
-    background: url(./../../../assets/images/pages/home/header/01.jpg) center no-repeat;
+    background: url(../../../assets/images/pages/home/header/01.jpg) center no-repeat;
     background-size: cover;
 }
 header::before {
