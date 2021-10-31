@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
         // this.loadScript();
     }
 
-    loadScript() {
+/*    loadScript() {
         // -- :: Index Page
 
         // Hosting Section
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
             $($(this).data('box')).fadeIn().siblings().hide();
         });
         // ----------------------------------
-    }
+    }*/
 
 
 

@@ -18,31 +18,30 @@ namespace Demo
 {
 	public class Startup
 	{
+		private IConfiguration Configuration { get; }
+
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
 
-		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllersWithViews();
-			
-			// In production, the Angular files will be served from this directory
-			/*services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });*/
+			services.AddCors();
+			services.AddControllers();
 
+			// Add authentication service
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-			   .AddCookie(option => {
-				   option.Cookie.Name = "authentication";
-			   });
+				.AddCookie(option => { option.Cookie.Name = "authentication"; });
 
+			// Connect to DB
 			var connectionString = Configuration["ConnectionStrings:DefaultConnection"].ToString();
-
 			services.AddDbContext<DatabaseContext>(option =>
 				option.UseLazyLoadingProxies().UseSqlServer(connectionString));
 
+			// Add services to communicate with DB
 			services.AddScoped<IRoleService, RoleService>();
 			services.AddScoped<ICredentialService, CredentialService>();
 		}
@@ -50,23 +49,17 @@ namespace Demo
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-
-
 			app.UseExceptionHandler("/error");
 
 			app.UseHttpsRedirection();
-			app.UseStaticFiles();
 			
-			if (!env.IsDevelopment())
-			{
-				app.UseSpaStaticFiles();
-			}
+			app.UseStaticFiles();
 
-			app.UseRouting();
+			app.UseMiddleware<CorsMiddleware>();
 
 			app.UseMiddleware<BasicAuthMiddleware>();
-
-		
+			
+			app.UseRouting();
 
 			app.UseAuthentication();
 
@@ -74,58 +67,9 @@ namespace Demo
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller}/{action=Index}/{id?}");
+				endpoints.MapControllers();
 			});
 
-			app.Map("/admin", adminApp =>
-			{
-				adminApp.UseSpa(spa =>
-				{
-					spa.Options.SourcePath = "AdminApp";
-					spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
-					{
-						FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "AdminApp"))
-					};
-					if (env.IsDevelopment())
-					{
-						spa.UseAngularCliServer(npmScript: "start");
-					}
-					
-				});
-			});
-
-			app.Map("", client =>
-			{
-				client.UseSpa(spa =>
-				{
-					spa.Options.SourcePath = "ClientApp";
-					spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
-					{
-						FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "ClientApp"))
-					};
-					if (env.IsDevelopment())
-					{
-						spa.UseAngularCliServer(npmScript: "start");
-					}
-				});
-				
-				
-			});
-
-			/*app.UseSpa(spa =>
-			{
-				// To learn more about options for serving an Angular SPA from ASP.NET Core,
-				// see https://go.microsoft.com/fwlink/?linkid=864501
-
-				spa.Options.SourcePath = "ClientApp";
-
-				if (env.IsDevelopment())
-				{
-					spa.UseAngularCliServer(npmScript: "start");
-				}
-			});*/
 		}
 	}
 }

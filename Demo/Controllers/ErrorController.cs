@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace Demo.Controllers
 {
     [ApiController]
-
     public class ErrorController : ControllerBase
     {
         [Route("/error")]

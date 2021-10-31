@@ -10,18 +10,15 @@
 */
 
 
-
 (function ($) {
 
     'use strict';
 
-      // -- :: Loading Page
-    //   $(window).on("load", function () {
-    //     $("#loading").fadeOut(1000);
-    //     $("html").css("overflow-y", "visible");
-    // });
+    // -- :: Loading Page
+    $(window).on("load", function () {
+        $("html").css("overflow-y", "visible");
+    });
     // ----------------------------------
-
 
 
     // // -- :: Navbar
@@ -83,16 +80,15 @@
     // -- :: Index Page
 
     // Hosting Section
-    $(document).on("click", "#index-page .hosting .host-taps li", function () {
+    $("#index-page .hosting .host-taps li").on("click" , function () {
         $(this).addClass("active").siblings().removeClass("active");
         $(".host-item").hide();
         $($(this).data("show")).show();
         return false;
     });
 
-    $(document).on(
+    $("#index-page .hosting .host-taps .s-toggler .check").on(
         "click",
-        "#index-page .hosting .host-taps .s-toggler .check",
         function () {
             $(this)
                 .parents(".s-toggler")
@@ -160,7 +156,7 @@
 
     // -- :: About Us Page
     // Hide Information card
-  $("#about-us-page .our-team .item .card-c").fadeOut(0);
+    $("#about-us-page .our-team .item .card-c").fadeOut(0);
 
     // Show Information Card
     $(document).on(
@@ -193,7 +189,7 @@
     );
 
     // Map Section
-    $(document).on("click","#about-us-page .flag", function () {
+    $(document).on("click", "#about-us-page .flag", function () {
         $(".flag").removeClass("open");
         $(this).addClass("open");
     });
