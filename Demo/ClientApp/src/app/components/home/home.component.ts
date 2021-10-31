@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadScript();
+        // this.loadScript();
     }
 
     loadScript() {

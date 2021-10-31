@@ -20,7 +20,7 @@ export class FooterComponent implements OnInit {
         $('#lang-btn').on('click', function () {
             $('footer .copyright .language-menu .menu').toggleClass('show');
         });
-        $(document).mouseup(function (e) {
+        $(document).mouseup(function (e:any) {
             var container = $("footer .copyright .language-menu .menu");
 
             // if the target of the click isn't the container nor a descendant of the container

@@ -12,7 +12,7 @@ export class PreloaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadScript();
+        // this.loadScript();
     }
 
     loadScript() {
