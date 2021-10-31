@@ -54,7 +54,7 @@ namespace Demo.Controllers
 				return Ok("test1");
 		}
 
-		[Authorize(Roles =("ADMIN,SUPER"))]
+		[Authorize(Roles =("AGENT"))]
 		[HttpGet("test2")]
 		[Produces("application/json")]
 		public IActionResult test2()
