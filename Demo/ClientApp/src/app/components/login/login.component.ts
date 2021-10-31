@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadScript();
+        // this.loadScript();
     }
 
     loadScript() {

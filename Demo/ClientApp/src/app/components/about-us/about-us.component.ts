@@ -12,7 +12,7 @@ export class AboutUsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadScript();
+        // this.loadScript();
     }
 
     loadScript() {
@@ -48,7 +48,7 @@ export class AboutUsComponent implements OnInit {
             $('.flag').removeClass('open');
             $(this).addClass('open');
         });
-        $(document).mouseup(function (e) {
+        $(document).mouseup(function (e:any) {
             var flag_con = $(".flag");
             // if the target of the click isn't the container nor a descendant of the container
             if (!flag_con.is(e.target) && flag_con.has(e.target).length === 0) {

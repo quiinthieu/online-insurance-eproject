@@ -1,5 +1,7 @@
 <!-- Preloader -->
-<preloader></preloader>
+<div *ngIf="loading">
+    <preloader></preloader>
+</div>
 
 <!-- NavBar -->
 <nav-bar></nav-bar>
@@ -7,4 +9,5 @@
 <router-outlet></router-outlet>
 
 <!-- Footer -->
+
 <app-footer></app-footer>
