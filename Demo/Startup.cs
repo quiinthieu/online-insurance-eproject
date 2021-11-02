@@ -54,6 +54,7 @@ namespace Demo
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			app.UseExceptionHandler("/error");
+			app.UsePathBase("/api");
 
 			app.UseHttpsRedirection();
 			

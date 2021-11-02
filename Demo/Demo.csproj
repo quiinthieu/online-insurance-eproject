@@ -38,6 +38,7 @@
       <Folder Include="ClientApp\src\app\elements" />
       <Folder Include="ClientApp\src\app\models" />
       <Folder Include="ClientApp\src\app\services" />
+      <Folder Include="Helpers" />
       <Folder Include="Models" />
     </ItemGroup>
 

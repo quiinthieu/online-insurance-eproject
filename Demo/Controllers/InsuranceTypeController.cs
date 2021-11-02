@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Demo.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("insurance-type")]
 	public class InsuranceTypeController : Controller
 	{
 		private IInsuranceTypeService _insuranceTypeService;
@@ -15,7 +15,7 @@ namespace Demo.Controllers
 			_insuranceTypeService = insuranceTypeService;
 		}
 		
-		[HttpGet("all-insuranceTypes")]
+		[HttpGet("find-all")]
 		[Produces("application/json")]
 		public IActionResult FindAll ()
 		{
@@ -29,7 +29,7 @@ namespace Demo.Controllers
 			}
 		}
 		
-		[HttpGet("insuranceType-details/{id}")]
+		[HttpGet("details/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindById(int id)
 		{
