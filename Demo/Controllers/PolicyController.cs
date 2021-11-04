@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Demo.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("policy")]
 	public class PolicyController : Controller
 	{
 		private IPolicyService _policyService;
