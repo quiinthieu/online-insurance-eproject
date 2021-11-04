@@ -10,7 +10,7 @@ namespace Demo.Services
 
 		public PolicyService(DatabaseContext databaseContext)
 		{
-			databaseContext = _databaseContext;
+			_databaseContext = databaseContext;
 		}
 		
 		public dynamic FindAll()
@@ -25,7 +25,7 @@ namespace Demo.Services
 				policy.Amount,
 				policy.InterestRate,
 				policy.Description
-			});
+			}).ToList();
 		}
 
 		public dynamic FindById(int id)
