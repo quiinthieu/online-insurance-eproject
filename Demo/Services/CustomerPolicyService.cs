@@ -63,5 +63,24 @@ namespace Demo.Services
 			_databaseContext.SaveChanges();
 			return customerPolicy;
 		}
+
+
+		public dynamic FindByCustomerId(int customerId)
+		{
+			return _databaseContext.CustomerPolicies.Select(customerPolicy => new
+			{
+				customerPolicy.Id,
+				customerPolicy.CustomerId,
+				CustomerName = customerPolicy.Customer.Name,
+				customerPolicy.PolicyId,
+				PolicyName = customerPolicy.Policy.Name,
+				InsuranceName = customerPolicy.Policy.InsuranceType.Name,
+				customerPolicy.StartDate,
+				customerPolicy.EndDate,
+				customerPolicy.PremiumTypeId,
+				PremiumTypeName = customerPolicy.PremiumType.Name,
+				customerPolicy.AgentId
+			}).SingleOrDefault(customerPolicy => customerPolicy.CustomerId == customerId);
+		}
 	}
 }

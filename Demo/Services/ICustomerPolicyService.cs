@@ -11,5 +11,9 @@ namespace Demo.Services
 		public dynamic Create(CustomerPolicy customerPolicy);
 
 		public dynamic Update(CustomerPolicy customerPolicy);
+
+		public dynamic FindByCustomerId(int customerId);
+		
+		
 	}
 }

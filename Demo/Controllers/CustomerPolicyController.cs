@@ -33,6 +33,20 @@ namespace Demo.Controllers
 			}
 		}
 		
+		[HttpGet("customer-policies/{customerId}")]
+		[Produces("application/json")]
+		public IActionResult FindByCustomerId (int customerId)
+		{
+			try
+			{
+				return Ok(_customerPolicyService.FindByCustomerId(customerId));
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
+		
 		[HttpGet("customer-policy-details/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindById(int id)
