@@ -60,6 +60,25 @@ namespace Demo.Services
             }).SingleOrDefault(i => i.Id == id);
         }
 
+        public dynamic FindByCredentialId(int id)
+        {
+            return db.Customers.Select(i => new
+            {
+                i.Id,
+                i.Name,
+                i.Birthday,
+                i.Gender,
+                i.Street,
+                i.City,
+                i.State,
+                i.ZipCode,
+                i.Occupation,
+                i.CredentialId,
+                i.CitizenId
+
+            }).SingleOrDefault(i => i.CredentialId == id);
+        }
+
         public Customer Update(int id,Customer customer)
         {
             var customerUpdate = db.Customers.Find(id);
