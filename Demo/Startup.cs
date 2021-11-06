@@ -47,7 +47,9 @@ namespace Demo
 			services.AddScoped<IPremiumTransactionService, PremiumTransactionService>();
 			services.AddScoped<IPremiumTypeService, PremiumTypeService>();
 			services.AddScoped<IRoleService, RoleService>();
-			
+			services.AddScoped<IMessageService, MessageService>();
+			services.AddScoped<ISubscriptionService, SubscriptionService>();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

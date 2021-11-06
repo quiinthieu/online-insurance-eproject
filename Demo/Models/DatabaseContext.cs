@@ -22,10 +22,12 @@ namespace Demo.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomerPolicy> CustomerPolicies { get; set; }
         public virtual DbSet<InsuranceType> InsuranceTypes { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Policy> Policies { get; set; }
         public virtual DbSet<PremiumTransaction> PremiumTransactions { get; set; }
         public virtual DbSet<PremiumType> PremiumTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Subscription> Subscriptions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -215,6 +217,23 @@ namespace Demo.Models
                 entity.Property(e => e.Name).IsUnicode(false);
             });
 
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("Message_pk")
+                    .IsClustered(false);
+
+                entity.ToTable("Message");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Message1)
+                    .HasColumnType("text")
+                    .HasColumnName("Message");
+            });
+
             modelBuilder.Entity<Policy>(entity =>
             {
                 entity.HasKey(e => e.Id)
@@ -275,6 +294,19 @@ namespace Demo.Models
                 entity.ToTable("Role");
 
                 entity.Property(e => e.Name).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Subscription>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("Subscription_pk")
+                    .IsClustered(false);
+
+                entity.ToTable("Subscription");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);
