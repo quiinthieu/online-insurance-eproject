@@ -36,7 +36,10 @@ namespace Demo.Controllers
 		{
 			try
 			{
-				return Ok(_subscriptionService.Unsubscribe(email));
+				return Ok(new
+				{
+					Result = _subscriptionService.Unsubscribe(email)
+				});
 			}
 			catch (Exception e)
 			{
