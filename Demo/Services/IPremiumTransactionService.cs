@@ -1,4 +1,5 @@
-﻿using Demo.Models;
+﻿using System.Collections.Generic;
+using Demo.Models;
 
 namespace Demo.Services
 {
@@ -9,6 +10,8 @@ namespace Demo.Services
 		public dynamic FindById(int id);
 
 		public dynamic Create(PremiumTransaction premiumTransaction);
+
+		public List<PremiumTransaction> Create(List<PremiumTransaction> premiumTransaction);
 
 		public dynamic Update(PremiumTransaction premiumTransaction);
 

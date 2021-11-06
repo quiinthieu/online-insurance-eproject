@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Demo.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,16 @@ namespace Demo.Services
 		{
 			_databaseContext.PremiumTransactions.Add(premiumTransaction);
 			_databaseContext.SaveChanges();
+			return premiumTransaction;
+		}
+
+		public List<PremiumTransaction> Create(List<PremiumTransaction> premiumTransaction)
+		{
+			premiumTransaction.ForEach(pt =>
+			{
+				_databaseContext.PremiumTransactions.Add(pt);
+				_databaseContext.SaveChanges();
+			});
 			return premiumTransaction;
 		}
 

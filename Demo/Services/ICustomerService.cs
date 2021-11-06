@@ -12,6 +12,8 @@ namespace Demo.Services
 
         public dynamic FindById(int id);
 
+        public dynamic FindByCredentialId(int id);
+
         public Customer Create(Customer customer);
 
         public Customer Update(int id,Customer customer);
