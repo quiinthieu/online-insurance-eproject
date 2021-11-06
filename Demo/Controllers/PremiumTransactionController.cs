@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Demo.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("premium-transaction")]
 	public class PremiumTransactionController : Controller
 	{
 		private IPremiumTransactionService _premiumTransactionService;
@@ -15,7 +15,7 @@ namespace Demo.Controllers
 			_premiumTransactionService = premiumTransactionService;
 		}
 		
-		[HttpGet("all-premiumTransactions")]
+		[HttpGet("all-premium-transactions")]
 		[Produces("application/json")]
 		public IActionResult FindAll ()
 		{
@@ -29,7 +29,7 @@ namespace Demo.Controllers
 			}
 		}
 		
-		[HttpGet("premiumTransaction-details/{id}")]
+		[HttpGet("premium-transaction-details/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindById(int id)
 		{

@@ -15,7 +15,7 @@ namespace Demo.Controllers
 			_insuranceTypeService = insuranceTypeService;
 		}
 		
-		[HttpGet("find-all")]
+		[HttpGet("all-insurance-types")]
 		[Produces("application/json")]
 		public IActionResult FindAll ()
 		{
@@ -29,7 +29,7 @@ namespace Demo.Controllers
 			}
 		}
 		
-		[HttpGet("details/{id}")]
+		[HttpGet("insurance-type-details/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindById(int id)
 		{

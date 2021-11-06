@@ -64,7 +64,7 @@ namespace Demo.Helpers
                     premiumTransaction.Amount = amountTransaction;
                     premiumTransaction.PaidDate = null;
 
-                    startDate = startDate.AddMonths(monthToAdd);
+                    startDate = startDate.Value.AddMonths(monthToAdd);
                     premiumTransaction.DueDate = startDate;
 
                     premiumTransactions.Add(premiumTransaction);

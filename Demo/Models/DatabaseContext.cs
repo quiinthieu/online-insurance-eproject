@@ -221,7 +221,7 @@ namespace Demo.Models
                     .HasName("InsurancePlan_pk")
                     .IsClustered(false);
 
-                entity.ToTable("PolicyService");
+                entity.ToTable("Policy");
 
                 entity.Property(e => e.Amount).HasColumnType("money");
 

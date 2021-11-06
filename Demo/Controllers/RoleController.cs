@@ -18,7 +18,7 @@ namespace Demo.Controllers
 		}
 
 	
-		[HttpGet("find-all")]
+		[HttpGet("all-roles")]
 		[Produces("application/json")]
 		public IActionResult FindAll()
 		{
@@ -32,7 +32,7 @@ namespace Demo.Controllers
 			};
 		}
 		
-		[HttpGet("find-by-id/{id}")]
+		[HttpGet("role-details/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindById(int id)
 		{

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Demo.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("premium-type")]
 	public class PremiumTypeController : Controller
 	{
 		private IPremiumTypeService _premiumType;
@@ -15,7 +15,7 @@ namespace Demo.Controllers
 			_premiumType = premiumType;
 		}
 		
-		[HttpGet("all-premiumTypes")]
+		[HttpGet("all-premium-types")]
 		[Produces("application/json")]
 		public IActionResult FindAll ()
 		{
@@ -29,7 +29,7 @@ namespace Demo.Controllers
 			}
 		}
 		
-		[HttpGet("premiumType-details/{id}")]
+		[HttpGet("premium-type-details/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindById(int id)
 		{

@@ -19,7 +19,7 @@ namespace Demo.Controllers
 			_policyService = policyService;
 		}
 		
-		[HttpGet("all-customerPolicies")]
+		[HttpGet("all-customer-policies")]
 		[Produces("application/json")]
 		public IActionResult FindAll ()
 		{
@@ -33,7 +33,7 @@ namespace Demo.Controllers
 			}
 		}
 		
-		[HttpGet("customerPolicy-details/{id}")]
+		[HttpGet("customer-policy-details/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindById(int id)
 		{
@@ -47,7 +47,7 @@ namespace Demo.Controllers
 			}
 		}
 
-		[HttpPost("create-customerPolicy")]
+		[HttpPost("create-customer-policy")]
 		[Produces("application/json")]
 		[Consumes("application/json")]
 		public IActionResult Create([FromBody] CustomerPolicy customerPolicy)
