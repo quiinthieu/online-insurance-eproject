@@ -51,5 +51,17 @@ namespace Demo.Services
 			_databaseContext.SaveChanges();
 			return premiumTransaction;
 		}
+
+		public dynamic FindByCustomerPolicyId(int customerPolicyId)
+		{
+			return _databaseContext.PremiumTransactions.Select(premiumTransaction => new
+			{
+				premiumTransaction.Id,
+				premiumTransaction.CustomerPolicyId,
+				premiumTransaction.Amount,
+				premiumTransaction.PaidDate,
+				premiumTransaction.DueDate
+			}).SingleOrDefault(premiumTransaction => premiumTransaction.CustomerPolicyId == customerPolicyId);
+		}
 	}
 }

@@ -42,5 +42,19 @@ namespace Demo.Controllers
 				return BadRequest();
 			}
 		}
+		
+		[HttpGet("premium-transactions/{customerPolicyId}")]
+		[Produces("application/json")]
+		public IActionResult FindByCustomerPolicyId(int customerPolicyId)
+		{
+			try
+			{
+				return Ok(_premiumTransactionService.FindByCustomerPolicyId(customerPolicyId));
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
 	}
 }

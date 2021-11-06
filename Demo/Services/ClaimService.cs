@@ -49,5 +49,16 @@ namespace Demo.Services
 			_databaseContext.SaveChanges();
 			return claim;
 		}
+
+		public dynamic FindByCustomerPolicyId(int customerPolicyId)
+		{
+			return _databaseContext.Claims.Select(claim => new
+			{
+				claim.Id,
+				claim.CustomerPolicyId,
+				claim.Amount,
+				claim.ClaimedDate
+			}).SingleOrDefault(claim => claim.CustomerPolicyId == customerPolicyId);
+		}
 	}
 }
