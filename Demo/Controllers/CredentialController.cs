@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Text;
+using Demo.Helpers;
 using Demo.Models;
 using Demo.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Demo.Controllers
 {
@@ -12,47 +16,72 @@ namespace Demo.Controllers
     {
         // Declare a variable to hold the CredentialService object
         private ICredentialService _credentialService;
+        private ICustomerService _customerService;
+        private IConfiguration _configuration;
+
 
         // Constructor --> Initialize the above variable with a CredentialService object 
-        public CredentialController(ICredentialService credentialService)
+        public CredentialController(ICredentialService credentialService, IConfiguration configuration, ICustomerService customerService)
         {
             _credentialService = credentialService;
+            _configuration = configuration;
+            _customerService = customerService;
         }
 
         // Register a new account
         [HttpPost("register")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public IActionResult Register([FromBody] Credential credential)
+        public IActionResult Register([FromBody] Register register)
         {
-            try
+
+            Debug.WriteLine(register.Birthday);
+            var credential = _credentialService.Create(new Credential
             {
-                return Ok(_credentialService.Create(credential));
-            }
-            catch (Exception e)
+                Email = register.Email,
+                Password = register.Password,
+            });
+
+            var customer = _customerService.Create(new Customer
             {
-                return BadRequest();
-            }
+                Name = register.Name,
+                Birthday = register.Birthday,
+                Gender = register.Gender,
+                Street = register.Street,
+                City = register.City,
+                State = register.State,
+                ZipCode = register.ZipCode,
+                Occupation = register.Occupation,
+                CitizenId = register.CitizenId,
+                CredentialId = credential.Id
+            });
+
+            return Ok(credential);
         }
+
 
         // Login
         [HttpPost("login")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login([FromBody] Credential logedinAccount)
         {
-
-            dynamic credential = _credentialService.FindByEmailAndPassword(email, password);
+            dynamic credential = _credentialService.FindByEmailAndPassword(logedinAccount.Email, logedinAccount.Password);
             if (credential == null)
             {
                 throw new UnauthorizedAccessException("Email and/or password is incorrect.");
             }
             else if (!credential.Status)
             {
-
+                throw new UnauthorizedAccessException("Account Inactivated");
             }
-            return Ok(_credentialService.Create(credential));
 
+            return Ok(
+                new
+                {
+                    accessToken = Base64Helper.Base64Encode($"{logedinAccount.Email}:{logedinAccount.Password}"),
+                    credential
+                });
         }
 
 
@@ -61,13 +90,134 @@ namespace Demo.Controllers
         [Consumes("application/json")]
         public IActionResult Logout()
         {
-
             HttpContext.SignOutAsync();
-         /*   HttpContext.Items.Clear();*/
+            /*   HttpContext.Items.Clear();*/
             return Ok();
+        }
+
+        // Avtivate request
+        [HttpPost("activate-request")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+
+        public IActionResult ActivateRequest([FromBody] Credential logedinAccount)
+        {
+
+            Debug.WriteLine(logedinAccount.Email);
+            var credential = _credentialService.FindByEmail(logedinAccount.Email);
+            if (credential == null)
+            {
+                throw new UnauthorizedAccessException("Account not exist");
+            }
+            else if (credential != null && credential.Status)
+            {
+                throw new UnauthorizedAccessException("Account already activated");
+            }
+            var UUID = Guid.NewGuid().ToString();
+            var subject = "Activation Code";
+            var body = $"Your activation code is: <b>{UUID}</b>";
+            new MailHelper(_configuration).Send(_configuration["Gmail:Username"], credential.Email, subject, body);
+
+            var updatedCredential = _credentialService.Update(new Credential
+            {
+                Email = credential.Email,
+                Password = credential.Password,
+                Status = credential.Status,
+                RoleId = credential.RoleId,
+                ActivationCode = UUID
+            });
+            return Ok(updatedCredential);
+        }
+
+        // Avtivate account
+        [HttpPost("activate-account")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+
+        public IActionResult ActivateAccount([FromBody] Credential logedinAccount)
+        {
+            Debug.WriteLine(logedinAccount.ActivationCode);
+            var credential = _credentialService.FindByActivationCode(logedinAccount.ActivationCode);
+            if (credential == null)
+            {
+                throw new UnauthorizedAccessException("Activation code not exist");
+            }
+            else if (credential != null && credential.Status)
+            {
+                throw new UnauthorizedAccessException("Account already activated");
+            }
+            var UUID = Guid.NewGuid().ToString();
+            var updatedCredential = _credentialService.Update(new Credential
+            {
+                Email = credential.Email,
+                Password = credential.Password,
+                Status = true,
+                RoleId = credential.RoleId,
+                ActivationCode = credential.ActivationCode
+            });
+
+            return Ok(updatedCredential);
 
         }
 
 
+        // Reset password request
+        [HttpPost("reset-password-request")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+
+        public IActionResult ResetPasswordRequest([FromBody] Credential logedinAccount)
+        {
+
+            Debug.WriteLine(logedinAccount.Email);
+            var credential = _credentialService.FindByEmail(logedinAccount.Email);
+            if (credential == null)
+            {
+                throw new UnauthorizedAccessException("Account not exist");
+            }
+
+            var UUID = Guid.NewGuid().ToString();
+            var subject = "Reset Password Code";
+            var body = $"Your reset password code is: <b>{UUID}</b>";
+            new MailHelper(_configuration).Send(_configuration["Gmail:Username"], credential.Email, subject, body);
+
+            var updatedCredential = _credentialService.Update(new Credential
+            {
+                Email = credential.Email,
+                Password = credential.Password,
+                Status = credential.Status,
+                RoleId = credential.RoleId,
+                ActivationCode = UUID
+            });
+            return Ok(updatedCredential);
+        }
+
+        // Reset password
+        [HttpPost("reset-password")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+
+        public IActionResult ResetPassword([FromBody] Credential logedinAccount)
+        {
+            Debug.WriteLine(logedinAccount.ActivationCode);
+            Debug.WriteLine(logedinAccount.Password);
+            var credential = _credentialService.FindByActivationCode(logedinAccount.ActivationCode);
+            if (credential == null)
+            {
+                throw new UnauthorizedAccessException("Activation code not exist");
+            }
+
+            var UUID = Guid.NewGuid().ToString();
+            var updatedCredential = _credentialService.Update(new Credential
+            {
+                Email = credential.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(logedinAccount.Password),
+                Status = true,
+                RoleId = credential.RoleId,
+                ActivationCode = UUID
+            });
+
+            return Ok(updatedCredential);
+        }
     }
 }

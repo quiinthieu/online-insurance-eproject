@@ -11,12 +11,12 @@ namespace Demo.Helpers
 {
     public class MailHelper
     {
-        private IConfiguration _configuration;
+        private  IConfiguration _configuration;
         public MailHelper(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        public bool Send(string from, string to, string subject, string body)
+        public  bool Send(string from, string to, string subject, string body)
         {
             try
             { 
@@ -42,10 +42,10 @@ namespace Demo.Helpers
             }
             catch
             {
-                return false;
+                throw new Exception("Sent email failed");
             }
         }
-        public bool Send(string from, string to, string subject, string body, string htmlAttachment)
+        public  bool Send(string from, string to, string subject, string body, string htmlAttachment)
         {
             try
             {

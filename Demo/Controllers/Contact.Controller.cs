@@ -23,8 +23,8 @@ namespace Demo.Controllers
         public IActionResult Send(string subject, string content)
         {
             //var s = "Subject" + subject + "<br>" + "Content" + content;
-            
-            var mailHelper = new MailHelper(_configuration);
+  
+         var mailHelper = new MailHelper(_configuration);
             try
             {
                 var result = "";

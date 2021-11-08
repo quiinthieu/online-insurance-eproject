@@ -29,6 +29,9 @@ namespace Demo.Middlewares
 
             if (httpContext.Request.Headers["Authorization"].Count > 0 && httpContext.Items["credential"] == null)
             {
+                Debug.WriteLine(httpContext.Request.Headers["Authorization"]
+                    .ToString());
+
                 var basicAuthHeader = httpContext.Request.Headers["Authorization"]
                     .ToString().Replace("Basic ", "");
                 var credential = Encoding.GetEncoding("UTF-8").GetString(

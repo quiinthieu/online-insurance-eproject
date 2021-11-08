@@ -13,11 +13,12 @@ namespace Demo.Services
     {
         // Declare a variable to hold a DatabaseContext object
         private DatabaseContext _databaseContext;
-
+        private IRoleService _roleService;
         // Constructor --> Initialize the above variable with DatabaseContext object
-        public CredentialService(DatabaseContext databaseContext)
+        public CredentialService(DatabaseContext databaseContext, IRoleService roleService)
         {
             _databaseContext = databaseContext;
+            _roleService = roleService;
         }
 
         // Used to check user's credential before logging in
@@ -26,11 +27,12 @@ namespace Demo.Services
 
             dynamic credential = _databaseContext.Credentials
             .SingleOrDefault(credential =>
-                credential.Email.Equals(email) );
+                credential.Email.Equals(email));
             if (credential != null && BCrypt.Net.BCrypt.Verify(password, credential.Password))
             {
                 credential = new
                 {
+                    credential.Id,
                     credential.Email,
                     credential.Password,
                     credential.Status,
@@ -43,7 +45,7 @@ namespace Demo.Services
             {
                 credential = null;
             }
-           
+
 
             return credential;
         }
@@ -51,40 +53,67 @@ namespace Demo.Services
         // Used to check user's credential to activate account, reset password, or check if email has already existed
         public dynamic FindByEmail(string email)
         {
-            return _databaseContext.Credentials
-                .Where(credential => credential.Email.Equals(email)).Select(
-                    credential => new
-                    {
-                        credential.Email,
-                        credential.Status,
-                        credential.RoleId,
-                        RoleName = credential.Role.Name,
-                        credential.ActivationCode
-                    });
+            var credential = _databaseContext.Credentials.SingleOrDefault(credential => credential.Email.Equals(email));
+            if (credential != null)
+            {
+                return new
+                {
+                    credential.Id,
+                    credential.Email,
+                    credential.Password,
+                    credential.Status,
+                    credential.RoleId,
+                    RoleName = credential.Role.Name,
+                    credential.ActivationCode
+                };
+            }
+            return null;
         }
 
         public dynamic Create(Credential credential)
         {
+            var ROLE_NAME = "Customer";
             credential.Password = BCrypt.Net.BCrypt.HashPassword(credential.Password);
+            credential.Status = false;
+            credential.RoleId = _roleService.FindByName(ROLE_NAME).Id;
+
             _databaseContext.Credentials.Add(credential);
             _databaseContext.SaveChanges();
-            return credential;
+            return credential; 
         }
-        
+
         // For customers or agent to update customers' profile
         public dynamic Update(Credential credential)
         {
-            _databaseContext.Credentials.Add(credential);
-            _databaseContext.Entry(credential).State = EntityState.Modified;
+            var updatedCredential = _databaseContext.Credentials.SingleOrDefault(cre => cre.Email.Equals(credential.Email));
+
+            updatedCredential.Email = credential.Email;
+            updatedCredential.Password = credential.Password;
+            updatedCredential.Status = credential.Status;
+            updatedCredential.RoleId = credential.RoleId;
+            updatedCredential.ActivationCode = credential.ActivationCode;
+
+
+            _databaseContext.Entry(updatedCredential).State = EntityState.Modified;
             _databaseContext.SaveChanges();
-            return credential;
+            return new
+            {
+                updatedCredential.Id,
+                updatedCredential.Email,
+                updatedCredential.Password,
+                updatedCredential.Status,
+                updatedCredential.RoleId,
+                RoleName = updatedCredential.Role.Name,
+                updatedCredential.ActivationCode
+            };
         }
-        
+
         // For agent to view the list of customers
         public dynamic FindAll()
         {
             return _databaseContext.Credentials.Select(credential => new
             {
+                credential.Id,
                 credential.Email,
                 credential.Status,
                 credential.RoleId,
@@ -92,7 +121,7 @@ namespace Demo.Services
                 credential.ActivationCode
             });
         }
-        
+
         // For agent to find a specific customer using his or her id
         public dynamic FindById(int id)
         {
@@ -116,5 +145,9 @@ namespace Demo.Services
             return claims;
         }
 
+        public dynamic FindByActivationCode(string activationCode)
+        {
+            return _databaseContext.Credentials.SingleOrDefault(cre => cre.ActivationCode == activationCode);
+        }
     }
 }

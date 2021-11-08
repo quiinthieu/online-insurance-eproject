@@ -11,6 +11,7 @@ namespace Demo.Services
 		public dynamic Create(Role role);
 
 		public dynamic Update(Role role);
+		public dynamic FindByName(string name);
 
 	}
 }

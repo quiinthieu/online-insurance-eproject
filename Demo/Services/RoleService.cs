@@ -30,6 +30,15 @@ namespace Demo.Services
 			}).SingleOrDefault(role => role.Id == id);
 		}
 
+		public dynamic FindByName(string name)
+		{
+			return _databaseContext.Roles.Select(role => new
+			{
+				role.Id,
+				role.Name
+			}).SingleOrDefault(role => role.Name == name);
+		}
+
 		public dynamic Create(Role role)
 		{
 			_databaseContext.Roles.Add(role);
