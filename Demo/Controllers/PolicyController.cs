@@ -42,5 +42,19 @@ namespace Demo.Controllers
 				return BadRequest();
 			}
 		}
+
+		[HttpGet("policy-by-insurancetype/{id}")]
+		[Produces("application/json")]
+		public IActionResult FindByInsuranceType(int id)
+		{
+			try
+			{
+				return Ok(_policyService.FindByInsuranceTypeId(id));
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
 	}
 }
