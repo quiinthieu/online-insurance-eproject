@@ -57,5 +57,20 @@ namespace Demo.Services
 			_databaseContext.SaveChanges();
 			return policy;
 		}
-	}
+
+        public dynamic FindByInsuranceTypeId(int id)
+        {
+			return _databaseContext.Policies.Select(policy => new
+			{
+				policy.Id,
+				policy.InsuranceTypeId,
+				InsuranceTypeName = policy.InsuranceType.Name,
+				policy.Name,
+				policy.Term,
+				policy.Amount,
+				policy.InterestRate,
+				policy.Description
+			}).Where(p => p.InsuranceTypeId == id).ToList();
+		}
+    }
 }
