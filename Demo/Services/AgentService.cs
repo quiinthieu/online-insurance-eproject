@@ -64,6 +64,11 @@ namespace Demo.Services
             }
             return null;
         }
+
+        public int Count()
+        {
+            return _databaseContext.Agents.Count();
+        }
     }
 }
 

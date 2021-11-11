@@ -9,5 +9,7 @@ namespace Demo.Services
         public dynamic FindById(int id);
         public Agent Create(Agent agent);
         public Agent Update(int id, Agent agent);
+
+        public int Count();
     }
 }
