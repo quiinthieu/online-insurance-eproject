@@ -60,7 +60,7 @@ namespace Demo
             app.UseExceptionHandler("/error");
             app.UsePathBase("/api");
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
