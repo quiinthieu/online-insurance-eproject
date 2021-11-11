@@ -74,7 +74,7 @@ namespace Demo.Services
         public dynamic Create(Credential credential)
         {
             var existCredential = _databaseContext.Credentials.SingleOrDefault(cre => cre.Email.Equals(credential.Email));
-            if(existCredential != null)
+            if (existCredential != null)
             {
                 throw new UnauthorizedAccessException("Email already exist");
             }
@@ -86,7 +86,7 @@ namespace Demo.Services
 
             _databaseContext.Credentials.Add(credential);
             _databaseContext.SaveChanges();
-            return credential; 
+            return credential;
         }
 
         // For customers or agent to update customers' profile
@@ -152,9 +152,9 @@ namespace Demo.Services
             return claims;
         }
 
-        public dynamic FindByActivationCode(string activationCode)
+        public dynamic FindByActivationCodeAndEmail(string activationCode, string email)
         {
-            return _databaseContext.Credentials.SingleOrDefault(cre => cre.ActivationCode == activationCode);
+            return _databaseContext.Credentials.SingleOrDefault(cre => cre.ActivationCode == activationCode && cre.Email == email);
         }
     }
 }

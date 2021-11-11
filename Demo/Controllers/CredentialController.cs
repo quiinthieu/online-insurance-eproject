@@ -114,10 +114,10 @@ namespace Demo.Controllers
                 throw new UnauthorizedAccessException("Account already activated");
             }
             var UUID = Guid.NewGuid().ToString();
+            var url = $"{_configuration["Client:ReturnUrl"]}/activate-account?token={Base64Helper.Base64Encode(logedinAccount.Email)}&activation-code={UUID}&type=activate-account";
             var subject = "Activation Code";
-            var body = $"Your activation code is: <b>{UUID}</b>";
+            var body = $"Please click the link below to activate your account: <b>{url}</b>";
             new MailHelper(_configuration).Send(_configuration["Gmail:Username"], credential.Email, subject, body);
-
             var updatedCredential = _credentialService.Update(new Credential
             {
                 Email = credential.Email,
@@ -137,7 +137,8 @@ namespace Demo.Controllers
         public IActionResult ActivateAccount([FromBody] Credential logedinAccount)
         {
             Debug.WriteLine(logedinAccount.ActivationCode);
-            var credential = _credentialService.FindByActivationCode(logedinAccount.ActivationCode);
+            Debug.WriteLine(logedinAccount.Email);
+            var credential = _credentialService.FindByActivationCodeAndEmail(logedinAccount.ActivationCode, logedinAccount.Email);
             if (credential == null)
             {
                 throw new UnauthorizedAccessException("Activation code not exist");
@@ -178,9 +179,9 @@ namespace Demo.Controllers
 
             var UUID = Guid.NewGuid().ToString();
             var subject = "Reset Password Code";
-            var body = $"Your reset password code is: <b>{UUID}</b>";
+            var url = $"{_configuration["Client:ReturnUrl"]}/activate-account?token={Base64Helper.Base64Encode(logedinAccount.Email)}&activation-code={UUID}&type=forgot-password";
+            var body = $"Please click the link below to reset your password account: <b>{url}</b>";
             new MailHelper(_configuration).Send(_configuration["Gmail:Username"], credential.Email, subject, body);
-
             var updatedCredential = _credentialService.Update(new Credential
             {
                 Email = credential.Email,
@@ -200,8 +201,9 @@ namespace Demo.Controllers
         public IActionResult ResetPassword([FromBody] Credential logedinAccount)
         {
             Debug.WriteLine(logedinAccount.ActivationCode);
+            Debug.WriteLine(logedinAccount.Email);
             Debug.WriteLine(logedinAccount.Password);
-            var credential = _credentialService.FindByActivationCode(logedinAccount.ActivationCode);
+            var credential = _credentialService.FindByActivationCodeAndEmail(logedinAccount.ActivationCode, logedinAccount.Email);
             if (credential == null)
             {
                 throw new UnauthorizedAccessException("Activation code not exist");
@@ -219,5 +221,24 @@ namespace Demo.Controllers
 
             return Ok(updatedCredential);
         }
+
+        // Verify Activation Code And Email
+        [HttpPost("verify")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+
+        public IActionResult VerifyActivationCodeAndEmail([FromBody] Credential logedinAccount)
+        {
+            Debug.WriteLine(logedinAccount.ActivationCode);
+            Debug.WriteLine(logedinAccount.Email);
+            var credential = _credentialService.FindByActivationCodeAndEmail(logedinAccount.ActivationCode, logedinAccount.Email);
+            if (credential == null)
+            {
+                throw new UnauthorizedAccessException("Activation code not exist");
+            }
+
+            return Ok(credential);
+        }
+
     }
 }
