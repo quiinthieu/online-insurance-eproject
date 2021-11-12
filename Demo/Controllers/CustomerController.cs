@@ -1,4 +1,5 @@
 ﻿using System;
+using Demo.Models;
 using Demo.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,5 +43,34 @@ namespace Demo.Controllers
 				return BadRequest();
 			}
 		}
+
+		[HttpGet("customer-details-by-credential/{id}")]
+		[Produces("application/json")]
+		public IActionResult FindByCredentialId(int id)
+		{
+			try
+			{
+				return Ok(_customerService.FindByCredentialId(id));
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
+
+		[HttpPut("customer-update/{id}")]
+		[Consumes("application/json")]
+		[Produces("application/json")]
+		public IActionResult Update(int id, [FromBody] Customer customer)
+        {
+            try
+            {
+				return Ok(_customerService.Update(id, customer));
+            }
+            catch (Exception ex)
+            {
+				return BadRequest();
+            }
+        }
 	}
 }

@@ -79,7 +79,7 @@ namespace Demo.Services
             }).SingleOrDefault(i => i.CredentialId == id);
         }
 
-        public Customer Update(int id,Customer customer)
+        public dynamic Update(int id,Customer customer)
         {
             var customerUpdate = db.Customers.Find(id);
             if (customerUpdate != null)
@@ -87,12 +87,29 @@ namespace Demo.Services
                 customerUpdate.Name = customer.Name;
                 customerUpdate.Birthday = customer.Birthday;
                 customerUpdate.Gender = customer.Gender;
+                customerUpdate.Street = customer.Street;
+                customerUpdate.City = customer.City;
+                customerUpdate.State = customer.State;
+                customerUpdate.ZipCode = customer.ZipCode;
+                customerUpdate.Occupation = customer.Occupation;
                 customerUpdate.CredentialId = customer.CredentialId;
                 customerUpdate.CitizenId = customer.CitizenId;
                 db.Entry(customerUpdate).State = EntityState.Modified;
                 db.SaveChanges();
-                return customerUpdate;
-
+                return new
+                {
+                    customerUpdate.Id,
+                    customerUpdate.Name,
+                    customerUpdate.Birthday,
+                    customerUpdate.Gender,
+                    customerUpdate.Street,
+                    customerUpdate.City,
+                    customerUpdate.State,
+                    customerUpdate.ZipCode,
+                    customerUpdate.Occupation,
+                    customerUpdate.CredentialId,
+                    customerUpdate.CitizenId
+                };
             }
 
             return null;
