@@ -60,5 +60,17 @@ namespace Demo.Services
 				claim.ClaimedDate
 			}).SingleOrDefault(claim => claim.CustomerPolicyId == customerPolicyId);
 		}
-	}
+
+        public dynamic FindByCustomerId(int customerId)
+        {
+			return _databaseContext.Claims.Where(c => c.CustomerPolicy.CustomerId == customerId).Select(c => new
+		   {
+				c.Id,
+				c.CustomerPolicyId,
+				c.CustomerPolicy.Policy.InsuranceType.Name,
+				c.Amount,
+				c.ClaimedDate
+		   }).OrderByDescending(c => c.ClaimedDate);
+        }
+    }
 }

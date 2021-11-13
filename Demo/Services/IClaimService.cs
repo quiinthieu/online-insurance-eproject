@@ -13,5 +13,7 @@ namespace Demo.Services
 		public dynamic Update(Claim claim);
 
 		public dynamic FindByCustomerPolicyId(int customerPolicyId);
+
+		public dynamic FindByCustomerId(int customerId);
 	}
 }
