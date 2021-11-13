@@ -44,14 +44,16 @@ namespace Demo.Controllers
 		[Produces("application/json")]
 		public IActionResult FindByCustomerId (int customerId)
 		{
-			try
+			return Ok(_customerPolicyService.FindByCustomerId(customerId));
+
+	/*		try
 			{
 				return Ok(_customerPolicyService.FindByCustomerId(customerId));
 			}
 			catch (Exception e)
 			{
 				return BadRequest();
-			}
+			}*/
 		}
 		
 		[HttpGet("customer-policy-details/{id}")]

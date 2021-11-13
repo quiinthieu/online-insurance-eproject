@@ -39,7 +39,7 @@ namespace Demo.Services
 
         public dynamic FindById(int id)
         {
-            return _databaseContext.Branches.AsNoTracking().Select(b => new
+            return _databaseContext.Branches.Select(b => new
             {
                 b.Id,
                 b.Name,
@@ -48,7 +48,8 @@ namespace Demo.Services
                 b.City,
                 b.State,
                 b.ZipCode
-            }).ToList();
+            }).SingleOrDefault(b=>b.Id==id);
+        
         }
 
         public Branch Update(int id, Branch branch)
