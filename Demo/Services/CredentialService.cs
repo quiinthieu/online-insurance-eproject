@@ -157,5 +157,10 @@ namespace Demo.Services
         {
             return _databaseContext.Credentials.SingleOrDefault(cre => cre.ActivationCode == activationCode && cre.Email == email);
         }
+
+        public int Count()
+        {
+            return _databaseContext.Credentials.Count();
+        }
     }
 }

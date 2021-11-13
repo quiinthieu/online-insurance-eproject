@@ -239,6 +239,23 @@ namespace Demo.Controllers
 
             return Ok(credential);
         }
+        
+        [HttpGet("count")]
+        [Produces("application/json")]
+        public IActionResult Count()
+        {
+            try
+            {
+                return Ok(new
+                {
+                    Result = _credentialService.Count()
+                });
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
 
     }
 }
