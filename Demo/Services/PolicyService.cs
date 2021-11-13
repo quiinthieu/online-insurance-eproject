@@ -35,6 +35,7 @@ namespace Demo.Services
 				policy.Id,
 				policy.InsuranceTypeId,
 				InsuranceTypeName = policy.InsuranceType.Name,
+				InsuranceTypeDesc = policy.InsuranceType.Description,
 				policy.Name,
 				policy.Term,
 				policy.Amount,

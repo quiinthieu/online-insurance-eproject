@@ -39,7 +39,8 @@ namespace Demo.Services
                     credential.Status,
                     credential.RoleId,
                     RoleName = credential.Role.Name,
-                    credential.ActivationCode
+                    credential.ActivationCode,
+                    credential.Customers,
                 };
             }
             else
