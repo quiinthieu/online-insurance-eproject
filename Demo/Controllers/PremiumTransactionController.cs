@@ -70,5 +70,22 @@ namespace Demo.Controllers
 				return BadRequest();
 			}
 		}
+		
+		[HttpGet("count")]
+		[Produces("application/json")]
+		public IActionResult Count()
+		{
+			try
+			{
+				return Ok(new
+				{
+					Result = _premiumTransactionService.Count()
+				});
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
 	}
 }
