@@ -56,17 +56,14 @@ namespace Demo.Controllers
 				return BadRequest();
 			}
 		}
-		
-		[HttpGet("count")]
+
+		[HttpGet("claims-by-customerid/{customerId}")]
 		[Produces("application/json")]
-		public IActionResult Count()
+		public IActionResult FindByCustomerId(int customerId)
 		{
 			try
 			{
-				return Ok(new
-				{
-					Result = _claimService.Count()
-				});
+				return Ok(_claimService.FindByCustomerId(customerId));
 			}
 			catch (Exception e)
 			{

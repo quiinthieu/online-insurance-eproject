@@ -74,5 +74,18 @@ namespace Demo.Services
 				premiumTransaction.DueDate
 			}).SingleOrDefault(premiumTransaction => premiumTransaction.CustomerPolicyId == customerPolicyId);
 		}
-	}
+
+        public dynamic FindByCustomerId(int customerId)
+        {
+			return _databaseContext.PremiumTransactions.Where(p => p.CustomerPolicy.CustomerId == customerId).Select(p => new
+			{
+				p.Id,
+				p.CustomerPolicyId,
+				p.CustomerPolicy.Policy.InsuranceType.Name,
+				p.Amount,
+				p.PaidDate,
+				p.DueDate
+			}).OrderBy(p=> p.Id);
+		}
+    }
 }

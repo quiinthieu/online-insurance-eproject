@@ -25,32 +25,43 @@ namespace Demo.Services
         // Used to check user's credential before logging in
         public dynamic FindByEmailAndPassword(string email, string password)
         {
-
-            dynamic credential = _databaseContext.Credentials
+            try
+            {
+                dynamic credential = _databaseContext.Credentials
             .SingleOrDefault(credential =>
                 credential.Email.Equals(email));
-            if (credential != null && BCrypt.Net.BCrypt.Verify(password, credential.Password))
-            {
-                credential = new
+                bool c1 = credential != null;
+                bool c2 = BCrypt.Net.BCrypt.Verify(password, credential.Password);
+                if (credential != null && BCrypt.Net.BCrypt.Verify(password, credential.Password))
                 {
-                    credential.Id,
-                    credential.Email,
-                    credential.Password,
-                    credential.Status,
-                    credential.RoleId,
-                    RoleName = credential.Role.Name,
-                    credential.ActivationCode,
-                    credential.Customers,
-                };
+                    credential = new
+                    {
+                        credential.Id,
+                        credential.Email,
+                        credential.Password,
+                        credential.Status,
+                        credential.RoleId,
+                        RoleName = credential.Role.Name,
+                        credential.ActivationCode,
+                        credential.Customers,
+                    };
+                }
+                else
+                {
+                    credential = null;
+                }
+
+
+                return credential;
             }
-            else
+            catch (Exception ex)
             {
-                credential = null;
+                return null;
             }
-
-
-            return credential;
         }
+
+        //$2a$11$JgD1iBdzJjkO3K2b9ejILepq8zASYEErJQ17xKxDzuvhUKH5R0hfq
+        //$2a$11$JgD1iBdzJjkO3K2b9ejILepq8zASYEErJQ17xKxDzuvhUKH5R0hfq
 
         // Used to check user's credential to activate account, reset password, or check if email has already existed
         public dynamic FindByEmail(string email)

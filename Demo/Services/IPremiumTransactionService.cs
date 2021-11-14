@@ -16,5 +16,6 @@ namespace Demo.Services
 		public dynamic Update(PremiumTransaction premiumTransaction);
 
 		public dynamic FindByCustomerPolicyId(int customerPolicyId);
+		public dynamic FindByCustomerId(int customerId);
 	}
 }
