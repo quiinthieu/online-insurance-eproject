@@ -9,5 +9,7 @@ namespace Demo.Services
         public dynamic FindById(int id);
         public Branch Create(Branch branch);
         public Branch Update(int id, Branch branch);
+
+        public int Count();
     }
 }

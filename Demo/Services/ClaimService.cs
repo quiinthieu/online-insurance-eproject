@@ -60,5 +60,10 @@ namespace Demo.Services
 				claim.ClaimedDate
 			}).SingleOrDefault(claim => claim.CustomerPolicyId == customerPolicyId);
 		}
+
+		public int Count()
+		{
+			return _databaseContext.Claims.Count();
+		}
 	}
 }

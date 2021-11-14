@@ -68,5 +68,10 @@ namespace Demo.Services
             }
             return null;
         }
+
+        public int Count()
+        {
+            return _databaseContext.Branches.Count();
+        }
     }
 }

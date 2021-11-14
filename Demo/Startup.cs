@@ -70,6 +70,12 @@ namespace Demo
             // app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+            
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed(host => true)
+                .AllowCredentials());
 
             app.UseMiddleware<CorsMiddleware>();
 
