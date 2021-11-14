@@ -61,9 +61,16 @@ namespace Demo.Services
 			}).SingleOrDefault(claim => claim.CustomerPolicyId == customerPolicyId);
 		}
 
-		public int Count()
-		{
-			return _databaseContext.Claims.Count();
-		}
-	}
+        public dynamic FindByCustomerId(int customerId)
+        {
+			return _databaseContext.Claims.Where(c => c.CustomerPolicy.CustomerId == customerId).Select(c => new
+		   {
+				c.Id,
+				c.CustomerPolicyId,
+				c.CustomerPolicy.Policy.InsuranceType.Name,
+				c.Amount,
+				c.ClaimedDate
+		   }).OrderByDescending(c => c.ClaimedDate);
+        }
+    }
 }
