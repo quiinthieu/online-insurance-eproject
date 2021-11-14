@@ -24,6 +24,8 @@ namespace Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+
+
             services.AddControllers().AddNewtonsoftJson(options =>
              options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -59,7 +61,12 @@ namespace Demo
         {
             app.UseExceptionHandler("/error");
             app.UsePathBase("/api");
-
+            app.UseCors(builder => builder
+             .AllowAnyHeader()
+             .AllowAnyMethod()
+             .SetIsOriginAllowed((host) => true)
+             .AllowCredentials()
+         );
             // app.UseHttpsRedirection();
 
             app.UseStaticFiles();
