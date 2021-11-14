@@ -17,5 +17,7 @@ namespace Demo.Services
         public Customer Create(Customer customer);
 
         public dynamic Update(int id,Customer customer);
+
+        public int Count();
     }
 }

@@ -13,7 +13,7 @@ namespace Demo.Services
 		public dynamic Update(CustomerPolicy customerPolicy);
 
 		public dynamic FindByCustomerId(int customerId);
-		
-		
+
+		public int Count();
 	}
 }

@@ -72,5 +72,10 @@ namespace Demo.Services
 				c.ClaimedDate
 		   }).OrderByDescending(c => c.ClaimedDate);
         }
+
+        public int Count()
+        {
+	        return _databaseContext.Claims.Count();
+        }
     }
 }

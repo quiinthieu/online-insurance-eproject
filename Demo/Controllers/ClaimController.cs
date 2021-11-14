@@ -43,7 +43,7 @@ namespace Demo.Controllers
 			}
 		}
 		
-		[HttpGet("claims/{customerPolicyId}")]
+		[HttpGet("claims-by-customer-policy-id/{customerPolicyId}")]
 		[Produces("application/json")]
 		public IActionResult FindByCustomerPolicyId(int customerPolicyId)
 		{
@@ -57,13 +57,30 @@ namespace Demo.Controllers
 			}
 		}
 
-		[HttpGet("claims-by-customerid/{customerId}")]
+		[HttpGet("claims-by-customer-id/{customerId}")]
 		[Produces("application/json")]
 		public IActionResult FindByCustomerId(int customerId)
 		{
 			try
 			{
 				return Ok(_claimService.FindByCustomerId(customerId));
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
+		
+		[HttpGet("count")]
+		[Produces("application/json")]
+		public IActionResult Count()
+		{
+			try
+			{
+				return Ok(new
+				{
+					Result = _claimService.Count()
+				});
 			}
 			catch (Exception e)
 			{

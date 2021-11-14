@@ -11,5 +11,7 @@ namespace Demo.Services
 		public dynamic Create(PremiumType premiumType);
 
 		public dynamic Update(PremiumType premiumType);
+
+		public int Count();
 	}
 }

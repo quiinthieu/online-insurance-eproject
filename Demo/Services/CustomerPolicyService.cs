@@ -108,6 +108,10 @@ namespace Demo.Services
 			});
         }
 
-	
+
+		public int Count()
+		{
+			return _databaseContext.CustomerPolicies.Count();
+		}
 	}
 }

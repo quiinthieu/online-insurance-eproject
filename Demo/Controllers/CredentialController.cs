@@ -99,7 +99,6 @@ namespace Demo.Controllers
         [HttpPost("activate-request")]
         [Consumes("application/json")]
         [Produces("application/json")]
-
         public IActionResult ActivateRequest([FromBody] Credential logedinAccount)
         {
 
@@ -133,7 +132,6 @@ namespace Demo.Controllers
         [HttpPost("activate-account")]
         [Consumes("application/json")]
         [Produces("application/json")]
-
         public IActionResult ActivateAccount([FromBody] Credential logedinAccount)
         {
             Debug.WriteLine(logedinAccount.ActivationCode);
@@ -166,7 +164,6 @@ namespace Demo.Controllers
         [HttpPost("reset-password-request")]
         [Consumes("application/json")]
         [Produces("application/json")]
-
         public IActionResult ResetPasswordRequest([FromBody] Credential logedinAccount)
         {
 
@@ -197,7 +194,6 @@ namespace Demo.Controllers
         [HttpPost("reset-password")]
         [Consumes("application/json")]
         [Produces("application/json")]
-
         public IActionResult ResetPassword([FromBody] Credential logedinAccount)
         {
             Debug.WriteLine(logedinAccount.ActivationCode);
@@ -226,7 +222,6 @@ namespace Demo.Controllers
         [HttpPost("verify")]
         [Consumes("application/json")]
         [Produces("application/json")]
-
         public IActionResult VerifyActivationCodeAndEmail([FromBody] Credential logedinAccount)
         {
             Debug.WriteLine(logedinAccount.ActivationCode);

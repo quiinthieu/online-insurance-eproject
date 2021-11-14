@@ -31,5 +31,10 @@ namespace Demo.Services
 				return false;
 			}
 		}
+
+		public int Count()
+		{
+			return _databaseContext.Subscriptions.Count();
+		}
 	}
 }

@@ -45,5 +45,10 @@ namespace Demo.Services
 			_databaseContext.SaveChanges();
 			return premiumType;
 		}
+
+		public int Count()
+		{
+			return _databaseContext.PremiumTransactions.Count();
+		}
 	}
 }

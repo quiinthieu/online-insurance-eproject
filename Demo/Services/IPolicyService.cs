@@ -9,5 +9,7 @@ namespace Demo.Services
 		public dynamic FindByInsuranceTypeId(int id);
 		public dynamic Create(Policy policyService);
 		public dynamic Update(Policy policyService);
+
+		public int Count();
 	}
 }

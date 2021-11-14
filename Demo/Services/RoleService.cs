@@ -53,5 +53,10 @@ namespace Demo.Services
 			_databaseContext.SaveChanges();
 			return role;
 		}
+
+		public int Count()
+		{
+			return _databaseContext.Roles.Count();
+		}
 	}
 }
