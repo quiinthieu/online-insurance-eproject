@@ -108,7 +108,7 @@ namespace Demo.Services
                     customerUpdate.ZipCode,
                     customerUpdate.Occupation,
                     customerUpdate.CredentialId,
-                    customerUpdate.CitizenId
+                    customerUpdate.CitizenId,
                 };
             }
 

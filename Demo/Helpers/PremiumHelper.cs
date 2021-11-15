@@ -14,10 +14,11 @@ namespace Demo.Helpers
             _policyService = policyService;
         }
         static List<PremiumTransaction> premiumTransactions = new List<PremiumTransaction>();
-        public static List<PremiumTransaction> PremiumTransactionScheludler(int? term, CustomerPolicy customerPolicy)
+        public static List<PremiumTransaction> PremiumTransactionScheludler(int term, CustomerPolicy customerPolicy)
         {
             try
             {
+
                 premiumTransactions.Clear();
                 // Lay ve premium type id
                 var premiumTypeId = customerPolicy.PremiumTypeId;

@@ -67,20 +67,30 @@ namespace Demo.Services
 
 		public dynamic FindByCustomerId(int customerId)
 		{
-            /*return _databaseContext.CustomerPolicies.Select(customerPolicy => new
-			{
-				customerPolicy.Id,
-				customerPolicy.CustomerId,
-				CustomerName = customerPolicy.Customer.Name,
-				customerPolicy.PolicyId,
-				PolicyName = customerPolicy.Policy.Name,
-				InsuranceName = customerPolicy.Policy.InsuranceType.Name,
-				customerPolicy.StartDate,
-				customerPolicy.EndDate,
-				customerPolicy.PremiumTypeId,
-				PremiumTypeName = customerPolicy.PremiumType.Name,
-				customerPolicy.AgentId
-			}).SingleOrDefault(customerPolicy => customerPolicy.CustomerId == customerId);*/
+            /* return _databaseContext.CustomerPolicies.Select(customerPolicy => new
+             {
+                 customerPolicy.Id,
+                 customerPolicy.CustomerId,
+                 CustomerName = customerPolicy.Customer.Name,
+                 customerPolicy.PolicyId,
+                 PolicyName = customerPolicy.Policy.Name,
+                 PolicyTerm = customerPolicy.Policy.Term,
+                 PolicyAmount = customerPolicy.Policy.Amount,
+                 PolicyInterest = customerPolicy.Policy.InterestRate,
+                 PolicyDesc = customerPolicy.Policy.Description,
+                 InsuranceName = customerPolicy.Policy.InsuranceType.Name,
+                 customerPolicy.StartDate,
+                 customerPolicy.EndDate,
+                 customerPolicy.PremiumTypeId,
+                 customerPolicy.PremiumAmount,
+                 PremiumTypeName = customerPolicy.PremiumType.Name,
+                 AgentId = customerPolicy.Agent.Id,
+                 AgentName = customerPolicy.Agent.Name,
+                 AgentGender = customerPolicy.Agent.Gender,
+                 AgentBirday = customerPolicy.Agent.Birthday,
+                 BranchId = customerPolicy.Agent.Branch.Id,
+                 BranchName = customerPolicy.Agent.Branch.Name
+             }).SingleOrDefault(customerPolicy => customerPolicy.CustomerId == customerId);*/
 
             return _databaseContext.CustomerPolicies.Where(customerPolicy => customerPolicy.CustomerId == customerId).Select(customerPolicy => new
             {
@@ -99,13 +109,13 @@ namespace Demo.Services
                 customerPolicy.PremiumTypeId,
                 customerPolicy.PremiumAmount,
                 PremiumTypeName = customerPolicy.PremiumType.Name,
-				AgentId= customerPolicy.Agent.Id,
-				AgentName= customerPolicy.Agent.Name,
-				AgentGender= customerPolicy.Agent.Gender,
-				AgentBirday= customerPolicy.Agent.Birthday,
-				BranchId = customerPolicy.Agent.Branch.Id,
-				BranchName = customerPolicy.Agent.Branch.Name
-			});
+                AgentId = customerPolicy.Agent.Id,
+                AgentName = customerPolicy.Agent.Name,
+                AgentGender = customerPolicy.Agent.Gender,
+                AgentBirday = customerPolicy.Agent.Birthday,
+                BranchId = customerPolicy.Agent.Branch.Id,
+                BranchName = customerPolicy.Agent.Branch.Name
+            });
         }
 
 
