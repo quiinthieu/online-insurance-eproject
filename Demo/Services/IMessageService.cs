@@ -7,6 +7,7 @@
 		public dynamic FindById(int id);
 
 		public dynamic FindByStatus(bool status);
-		
+
+		public int Count();
 	}
 }

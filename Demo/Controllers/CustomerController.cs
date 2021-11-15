@@ -30,7 +30,7 @@ namespace Demo.Controllers
 			}
 		}
 		
-		[HttpGet("customer-details/{id}")]
+		[HttpGet("customer-details-by-id/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindById(int id)
 		{
@@ -44,7 +44,7 @@ namespace Demo.Controllers
 			}
 		}
 
-		[HttpGet("customer-details-by-credential/{id}")]
+		[HttpGet("customer-details-by-credential-id/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindByCredentialId(int id)
 		{
@@ -58,7 +58,7 @@ namespace Demo.Controllers
 			}
 		}
 
-		[HttpPut("customer-update/{id}")]
+		[HttpPut("update-customer/{id}")]
 		[Consumes("application/json")]
 		[Produces("application/json")]
 		public IActionResult Update(int id, [FromBody] Customer customer)
@@ -72,5 +72,22 @@ namespace Demo.Controllers
 				return BadRequest();
             }
         }
+		
+		[HttpGet("count")]
+		[Produces("application/json")]
+		public IActionResult Count()
+		{
+			try
+			{
+				return Ok(new
+				{
+					Result = _customerService.Count()
+				});
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
 	}
 }

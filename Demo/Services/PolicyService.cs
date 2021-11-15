@@ -73,5 +73,10 @@ namespace Demo.Services
 				policy.Description
 			}).Where(p => p.InsuranceTypeId == id).ToList();
 		}
+
+        public int Count()
+        {
+	        return _databaseContext.Policies.Count();
+        }
     }
 }

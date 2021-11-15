@@ -87,5 +87,10 @@ namespace Demo.Services
 				p.DueDate
 			}).OrderBy(p=> p.Id);
 		}
+
+        public int Count()
+        {
+	        return _databaseContext.PremiumTransactions.Count();
+        }
     }
 }

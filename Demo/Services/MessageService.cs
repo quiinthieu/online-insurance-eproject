@@ -26,5 +26,10 @@ namespace Demo.Services
 		{
 			return _databaseContext.Messages.Where(message => message.Status == status);
 		}
+
+		public int Count()
+		{
+			return _databaseContext.Messages.Count();
+		}
 	}
 }

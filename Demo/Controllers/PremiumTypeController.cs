@@ -8,11 +8,11 @@ namespace Demo.Controllers
 	[Route("premium-type")]
 	public class PremiumTypeController : Controller
 	{
-		private IPremiumTypeService _premiumType;
+		private IPremiumTypeService _premiumTypeService;
 
-		public PremiumTypeController(IPremiumTypeService premiumType)
+		public PremiumTypeController(IPremiumTypeService premiumTypeService)
 		{
-			_premiumType = premiumType;
+			_premiumTypeService = premiumTypeService;
 		}
 		
 		[HttpGet("all-premium-types")]
@@ -21,7 +21,7 @@ namespace Demo.Controllers
 		{
 			try
 			{
-				return Ok(_premiumType.FindAll());
+				return Ok(_premiumTypeService.FindAll());
 			}
 			catch (Exception e)
 			{
@@ -35,7 +35,24 @@ namespace Demo.Controllers
 		{
 			try
 			{
-				return Ok(_premiumType.FindById(id));
+				return Ok(_premiumTypeService.FindById(id));
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
+		
+		[HttpGet("count")]
+		[Produces("application/json")]
+		public IActionResult Count()
+		{
+			try
+			{
+				return Ok(new
+				{
+					Result = _premiumTypeService.Count()
+				});
 			}
 			catch (Exception e)
 			{

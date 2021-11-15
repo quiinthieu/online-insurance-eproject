@@ -13,5 +13,7 @@ namespace Demo.Services
 		public dynamic Update(Role role);
 		public dynamic FindByName(string name);
 
+		public int Count();
+
 	}
 }

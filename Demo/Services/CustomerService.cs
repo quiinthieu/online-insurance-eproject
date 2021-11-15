@@ -9,22 +9,22 @@ namespace Demo.Services
 {
     public class CustomerService : ICustomerService
     {
-        private DatabaseContext db;
+        private DatabaseContext _databaseContext;
 
-        public CustomerService(DatabaseContext _db)
+        public CustomerService(DatabaseContext databaseContext)
         {
-            db = _db;
+            _databaseContext = databaseContext;
         }
         public Customer Create(Customer customer)
         {
-            db.Customers.Add(customer);
-            db.SaveChanges();
+            _databaseContext.Customers.Add(customer);
+            _databaseContext.SaveChanges();
             return customer;
         }
 
         public dynamic FindAll()
         {
-            return db.Customers.Select(i => new
+            return _databaseContext.Customers.Select(i => new
             {
                 i.Id,
                 i.Name,
@@ -43,7 +43,7 @@ namespace Demo.Services
 
         public dynamic FindById(int id)
         {
-            return db.Customers.Select(i => new
+            return _databaseContext.Customers.Select(i => new
             {
                 i.Id,
                 i.Name,
@@ -62,7 +62,7 @@ namespace Demo.Services
 
         public dynamic FindByCredentialId(int id)
         {
-            return db.Customers.Select(i => new
+            return _databaseContext.Customers.Select(i => new
             {
                 i.Id,
                 i.Name,
@@ -81,7 +81,7 @@ namespace Demo.Services
 
         public dynamic Update(int id,Customer customer)
         {
-            var customerUpdate = db.Customers.Find(id);
+            var customerUpdate = _databaseContext.Customers.Find(id);
             if (customerUpdate != null)
             {
                 customerUpdate.Name = customer.Name;
@@ -94,8 +94,8 @@ namespace Demo.Services
                 customerUpdate.Occupation = customer.Occupation;
                 customerUpdate.CredentialId = customer.CredentialId;
                 customerUpdate.CitizenId = customer.CitizenId;
-                db.Entry(customerUpdate).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseContext.Entry(customerUpdate).State = EntityState.Modified;
+                _databaseContext.SaveChanges();
                 return new
                 {
                     customerUpdate.Id,
@@ -114,5 +114,11 @@ namespace Demo.Services
 
             return null;
         }
+
+        public int Count()
+        {
+            return _databaseContext.Customers.Count();
+        }
+        
     }
 }

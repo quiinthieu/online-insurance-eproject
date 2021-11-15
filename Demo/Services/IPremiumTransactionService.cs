@@ -17,5 +17,7 @@ namespace Demo.Services
 
 		public dynamic FindByCustomerPolicyId(int customerPolicyId);
 		public dynamic FindByCustomerId(int customerId);
+
+		public int Count();
 	}
 }

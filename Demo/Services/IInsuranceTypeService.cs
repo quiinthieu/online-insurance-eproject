@@ -15,5 +15,7 @@ namespace Demo.Services
         public dynamic Create(InsuranceType insuranceType);
 
         public dynamic Update(InsuranceType insuranceType);
+
+        public int Count();
     }
 }

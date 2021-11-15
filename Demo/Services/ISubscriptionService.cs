@@ -5,5 +5,7 @@
 		public dynamic FindAll();
 
 		public dynamic Unsubscribe(string email);
+
+		public int Count();
 	}
 }

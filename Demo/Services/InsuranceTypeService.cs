@@ -9,22 +9,22 @@ namespace Demo.Services
 {
     public class InsuranceTypeService : IInsuranceTypeService
     {
-        private DatabaseContext db;
+        private DatabaseContext _databaseContext;
 
-        public InsuranceTypeService(DatabaseContext _db)
+        public InsuranceTypeService(DatabaseContext databaseContext)
         {
-            db = _db;
+            _databaseContext = databaseContext;
         }
         public dynamic Create(InsuranceType insuranceType)
         {
-            db.InsuranceTypes.Add(insuranceType);
-            db.SaveChanges();
+            _databaseContext.InsuranceTypes.Add(insuranceType);
+            _databaseContext.SaveChanges();
             return insuranceType;
         }
 
         public dynamic FindAll()
         {
-            return db.InsuranceTypes.Select(i => new
+            return _databaseContext.InsuranceTypes.Select(i => new
             {
                 i.Id,
                 i.Name,
@@ -35,7 +35,7 @@ namespace Demo.Services
 
         public dynamic FindById(int id)
         {
-            return db.InsuranceTypes.Select(i => new
+            return _databaseContext.InsuranceTypes.Select(i => new
             {
                 i.Id,
                 i.Name,
@@ -45,10 +45,15 @@ namespace Demo.Services
 
         public dynamic Update(InsuranceType insuranceType)
         {
-            db.InsuranceTypes.Add(insuranceType);
-            db.Entry(insuranceType).State = EntityState.Modified;
-            db.SaveChanges();
+            _databaseContext.InsuranceTypes.Add(insuranceType);
+            _databaseContext.Entry(insuranceType).State = EntityState.Modified;
+            _databaseContext.SaveChanges();
             return insuranceType;
+        }
+
+        public int Count()
+        {
+            return _databaseContext.InsuranceTypes.Count();
         }
     }
 }

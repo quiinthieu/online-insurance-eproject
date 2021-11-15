@@ -84,6 +84,23 @@ namespace Demo.Controllers
 		{
 			return Ok(HttpContext.Items["credential"]);
 		}
+		
+		[HttpGet("count")]
+		[Produces("application/json")]
+		public IActionResult Count()
+		{
+			try
+			{
+				return Ok(new
+				{
+					Result = _roleService.Count()
+				});
+			}
+			catch (Exception e)
+			{
+				return BadRequest();
+			}
+		}
 
 
 	}
