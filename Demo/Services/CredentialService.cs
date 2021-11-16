@@ -60,9 +60,6 @@ namespace Demo.Services
             }
         }
 
-        //$2a$11$JgD1iBdzJjkO3K2b9ejILepq8zASYEErJQ17xKxDzuvhUKH5R0hfq
-        //$2a$11$JgD1iBdzJjkO3K2b9ejILepq8zASYEErJQ17xKxDzuvhUKH5R0hfq
-
         // Used to check user's credential to activate account, reset password, or check if email has already existed
         public dynamic FindByEmail(string email)
         {
@@ -128,7 +125,7 @@ namespace Demo.Services
         }
 
         // For agent to view the list of customers
-        public dynamic FindAll()
+        public dynamic Find()
         {
             return _databaseContext.Credentials.Select(credential => new
             {
@@ -172,6 +169,11 @@ namespace Demo.Services
         public int Count()
         {
             return _databaseContext.Credentials.Count();
+        }
+
+        public dynamic FindAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

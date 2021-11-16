@@ -58,7 +58,7 @@ namespace Demo.Controllers
 			}
 		}
 
-		[HttpPut("update-customer/{id}")]
+		[HttpPut("customer-update/{id}")]
 		[Consumes("application/json")]
 		[Produces("application/json")]
 		public IActionResult Update(int id, [FromBody] Customer customer)

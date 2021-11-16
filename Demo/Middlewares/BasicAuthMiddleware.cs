@@ -42,7 +42,6 @@ namespace Demo.Middlewares
                 var password = credentialInfo[1];
                 dynamic loginAccount = credentialService.FindByEmailAndPassword(email, password);
 
-
                 if (loginAccount == null || !loginAccount.Status)
                 {
                     throw new UnauthorizedAccessException();
