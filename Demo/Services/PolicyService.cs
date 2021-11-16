@@ -40,7 +40,7 @@ namespace Demo.Services
 				policy.Term,
 				policy.Amount,
 				policy.InterestRate,
-				policy.Description
+				policy.Description,
 			}).SingleOrDefault(policy => policy.Id == id);
 		}
 

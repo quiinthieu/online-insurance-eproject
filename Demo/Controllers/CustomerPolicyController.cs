@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Demo.Helpers;
 using Demo.Models;
@@ -8,133 +9,161 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Controllers
 {
-	[ApiController]
-	[Route("customer-policy")]
-	public class CustomerPolicyController : Controller
-	{
-		private ICustomerPolicyService _customerPolicyService;
-		private ICustomerService _customerService;
-		private IPolicyService _policyService;
-		private IPremiumTransactionService _premiumTransactService;
+    [ApiController]
+    [Route("customer-policy")]
+    public class CustomerPolicyController : Controller
+    {
+        private ICustomerPolicyService _customerPolicyService;
+        private ICustomerService _customerService;
+        private IPolicyService _policyService;
+        private IPremiumTransactionService _premiumTransactService;
 
 
-		public CustomerPolicyController(ICustomerPolicyService customerPolicyService, IPolicyService policyService, ICustomerService customerService, IPremiumTransactionService premiumTransactService)
-		{
-			_customerPolicyService = customerPolicyService;
-			_policyService = policyService;
-			_customerService = customerService;
-			_premiumTransactService = premiumTransactService;
-		}
-		
-		[HttpGet("all-customer-policies")]
-		[Produces("application/json")]
-		public IActionResult FindAll ()
-		{
-			try
-			{
-				return Ok(_customerPolicyService.FindAll());
-			}
-			catch (Exception e)
-			{
-				return BadRequest();
-			}
-		}
-		
-		[HttpGet("customer-policies/{customerId}")]
-		[Produces("application/json")]
-		public IActionResult FindByCustomerId (int customerId)
-		{
-			return Ok(_customerPolicyService.FindByCustomerId(customerId));
+        public CustomerPolicyController(ICustomerPolicyService customerPolicyService, IPolicyService policyService, ICustomerService customerService, IPremiumTransactionService premiumTransactService)
+        {
+            _customerPolicyService = customerPolicyService;
+            _policyService = policyService;
+            _customerService = customerService;
+            _premiumTransactService = premiumTransactService;
+        }
 
-	/*		try
-			{
-				return Ok(_customerPolicyService.FindByCustomerId(customerId));
-			}
-			catch (Exception e)
-			{
-				return BadRequest();
-			}*/
-		}
-		
-		[HttpGet("customer-policy-details/{id}")]
-		[Produces("application/json")]
-		public IActionResult FindById(int id)
-		{
-			try
-			{
-				return Ok(_customerPolicyService.FindById(id));
-			}
-			catch (Exception e)
-			{
-				return BadRequest();
-			}
-		}
+        [HttpGet("all-customer-policies")]
+        [Produces("application/json")]
+        public IActionResult FindAll()
+        {
+            try
+            {
+                return Ok(_customerPolicyService.FindAll());
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
 
-		[HttpPost("create-customer-policy")]
-		[Produces("application/json")]
-		[Consumes("application/json")]
-		public IActionResult Create([FromBody] CustomerPolicy customerPolicy)
-		{
-			try
-			{
-				// Lay ve term tu policy thong qua service vi doi tuong customerPolicy co Policy null
-				int id = customerPolicy.PolicyId;
-				dynamic policy = _policyService.FindById(id);
-				int? term = policy.Term;
-				// Tinh toan premium amount
-				customerPolicy.PremiumAmount = policy.Term * policy.Amount;
+        [HttpGet("customer-policies/{customerId}")]
+        [Produces("application/json")]
+        public IActionResult FindByCustomerId(int customerId)
+        {
+            return Ok(_customerPolicyService.FindByCustomerId(customerId));
 
-				// Gan startdate
-				customerPolicy.StartDate = DateTime.Now;
+            /*		try
+                    {
+                        return Ok(_customerPolicyService.FindByCustomerId(customerId));
+                    }
+                    catch (Exception e)
+                    {
+                        return BadRequest();
+                    }*/
+        }
 
-				// Gan enddate
-				customerPolicy.EndDate = customerPolicy.StartDate.Value.AddYears((int)term);
+        [HttpGet("customer-policy-details/{id}")]
+        [Produces("application/json")]
+        public IActionResult FindById(int id)
+        {
+            try
+            {
+                return Ok(_customerPolicyService.FindById(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("create-customer-policy")]
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        public IActionResult Create([FromBody] BuyPolicy customerPolicy)
+        {
+            try
+            {
+                var AGENT_ID = 2;
+
+               _customerService.Update(customerPolicy.Id, new Customer
+            {
+                Name = customerPolicy.Name,
+                Birthday = customerPolicy.Birthday,
+                Gender = customerPolicy.Gender,
+                Street = customerPolicy.Street,
+                City = customerPolicy.City,
+                State = customerPolicy.State,
+                ZipCode = customerPolicy.ZipCode,
+                Occupation = customerPolicy.Occupation,
+                CredentialId = customerPolicy.CredentialId,
+                CitizenId = customerPolicy.CitizenId,
+            });
 
 
-				// Gan customer
-				dynamic loginAccount = HttpContext.Items["credential"];
+                customerPolicy.PolicyId.ForEach(policyId =>
+                {
+                // Lay ve term tu policy thong qua service vi doi tuong customerPolicy co Policy null
+                int id = policyId;
+                    dynamic policy = _policyService.FindById(id);
+                    int term = policy.Term;
+                    var cusPolicy = new CustomerPolicy();
 
-				int credenId = loginAccount.Id;
+                    cusPolicy.PolicyId = id;
 
-				dynamic customer = _customerService.FindByCredentialId(credenId);
+                    cusPolicy.PremiumTypeId = customerPolicy.PremiumTypeId;
 
-				int customerId = customer.Id;
+                // Tinh toan premium amount
+                cusPolicy.PremiumAmount = policy.Term * policy.Amount;
 
-				customerPolicy.CustomerId = customerId;
+                // Gan startdate
+                cusPolicy.StartDate = DateTime.Now;
 
-				// Them customerpolicy
-				_customerPolicyService.Create(customerPolicy);
+                // Gan enddate
+                cusPolicy.EndDate = cusPolicy.StartDate.Value.AddYears((int)term);
 
-				var pts = PremiumHelper.PremiumTransactionScheludler(term, customerPolicy);
 
-				_premiumTransactService.Create(pts);
+                // Gan customer
+                dynamic loginAccount = HttpContext.Items["credential"];
 
-				return Ok(new
-				{
-					msg="Successfully added"
-				});
-			}
-			catch (Exception ex)
-			{
-				return BadRequest();
-			}
-		}
-		
-		[HttpGet("count")]
-		[Produces("application/json")]
-		public IActionResult Count()
-		{
-			try
-			{
-				return Ok(new
-				{
-					Result = _customerPolicyService.Count()
-				});
-			}
-			catch (Exception e)
-			{
-				return BadRequest();
-			}
-		}
-	}
+                    int credenId = customerPolicy.CredentialId;
+
+                    dynamic customer = _customerService.FindByCredentialId(credenId);
+
+                    int customerId = customer.Id;
+
+                    cusPolicy.CustomerId = customerId;
+                    cusPolicy.AgentId = AGENT_ID;
+
+                // Them customerpolicy
+                    _customerPolicyService.Create(cusPolicy);
+
+                    var pts = PremiumHelper.PremiumTransactionScheludler(term, cusPolicy);
+
+                    _premiumTransactService.Create(pts);
+                });
+
+
+                return Ok(new
+            {
+                msg = "Successfully added"
+            });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("count")]
+        [Produces("application/json")]
+        public IActionResult Count()
+        {
+            try
+            {
+                return Ok(new
+                {
+                    Result = _customerPolicyService.Count()
+                });
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+    }
 }
