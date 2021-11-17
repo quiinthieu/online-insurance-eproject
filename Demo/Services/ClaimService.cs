@@ -57,7 +57,11 @@ namespace Demo.Services
 				claim.Id,
 				claim.CustomerPolicyId,
 				claim.Amount,
-				claim.ClaimedDate
+				claim.CustomerPolicy.StartDate,
+				claim.CustomerPolicy.EndDate,
+				claim.ClaimedDate,
+				claim.CustomerPolicy.Policy.InsuranceType.Name,
+
 			}).SingleOrDefault(claim => claim.CustomerPolicyId == customerPolicyId);
 		}
 
