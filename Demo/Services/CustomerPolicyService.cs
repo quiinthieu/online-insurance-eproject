@@ -123,5 +123,5 @@ namespace Demo.Services
 		{
 			return _databaseContext.CustomerPolicies.Count();
 		}
-	}
+    }
 }
