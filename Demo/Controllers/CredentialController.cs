@@ -45,7 +45,7 @@ namespace Demo.Controllers
             var customer = _customerService.Create(new Customer
             {
                 Name = register.Name,
-                Birthday = register.Birthday,
+            /*    Birthday = register.Birthday,*/
                 Gender = register.Gender,
                 Street = register.Street,
                 City = register.City,

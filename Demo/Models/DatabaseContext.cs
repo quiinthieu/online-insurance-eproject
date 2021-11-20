@@ -29,14 +29,14 @@ namespace Demo.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Subscription> Subscriptions { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Server=.;Database=ONLINEINSURANCE;user id=developer;password=password");
-//            }
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-KJ0HMRU\\SQLEXPRESS;Database=ONLINEINSURANCE;user id=sa;password=root");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,11 +60,6 @@ namespace Demo.Models
                     .WithMany(p => p.Agents)
                     .HasForeignKey(d => d.BranchId)
                     .HasConstraintName("Agent_Branch_Id_fk");
-
-                entity.HasOne(d => d.Credential)
-                    .WithMany(p => p.Agents)
-                    .HasForeignKey(d => d.CredentialId)
-                    .HasConstraintName("Agent_Credential_Id_fk");
             });
 
             modelBuilder.Entity<Branch>(entity =>
@@ -128,6 +123,11 @@ namespace Demo.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password).IsUnicode(false);
+
+                entity.HasOne(d => d.Branch)
+                    .WithMany(p => p.Credentials)
+                    .HasForeignKey(d => d.BranchId)
+                    .HasConstraintName("FK_Credential_Branch");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Credentials)

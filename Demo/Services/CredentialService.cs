@@ -92,6 +92,7 @@ namespace Demo.Services
             credential.Password = BCrypt.Net.BCrypt.HashPassword(credential.Password);
             credential.Status = false;
             credential.RoleId = _roleService.FindByName(ROLE_NAME).Id;
+            credential.BranchId = 1;
 
             _databaseContext.Credentials.Add(credential);
             _databaseContext.SaveChanges();
