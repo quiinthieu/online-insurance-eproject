@@ -69,10 +69,11 @@ namespace Demo.Services
 			{
 				premiumTransaction.Id,
 				premiumTransaction.CustomerPolicyId,
+				premiumTransaction.CustomerPolicy.Policy.InsuranceType.Name,
 				premiumTransaction.Amount,
 				premiumTransaction.PaidDate,
 				premiumTransaction.DueDate
-			}).SingleOrDefault(premiumTransaction => premiumTransaction.CustomerPolicyId == customerPolicyId);
+			}).Where(premiumTransaction => premiumTransaction.CustomerPolicyId == customerPolicyId).OrderBy(p => p.Id);
 		}
 
         public dynamic FindByCustomerId(int customerId)
