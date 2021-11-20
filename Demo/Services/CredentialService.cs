@@ -44,6 +44,7 @@ namespace Demo.Services
                         RoleName = credential.Role.Name,
                         credential.ActivationCode,
                         credential.Customers,
+                        BranchId = credential.BranchId
                     };
                 }
                 else
@@ -149,7 +150,8 @@ namespace Demo.Services
                 credential.Status,
                 credential.RoleId,
                 RoleName = credential.Role.Name,
-                credential.ActivationCode
+                credential.ActivationCode,
+                BranchId = credential.BranchId
             }).SingleOrDefault(credential => credential.Id == id);
         }
 

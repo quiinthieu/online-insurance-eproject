@@ -13,7 +13,7 @@ namespace Demo.PayPal
     public class PayPalService
     {
         private static string FAILED_URL = "paypal/CheckoutFail";
-        private static string SUCCESS_URL = "paypal/CheckoutSuccess";
+        private static string SUCCESS_URL = "customer/customer-policy";
         public static PayPalConfig getPayPalConfig(IConfiguration configuration)
         {
             return new PayPalConfig()
@@ -71,8 +71,8 @@ namespace Demo.PayPal
                 },
                 RedirectUrls = new RedirectUrls()
                 {
-                    CancelUrl = $"{hostname}/${FAILED_URL}",
-                    ReturnUrl = $"{hostname}/${SUCCESS_URL}"
+                    CancelUrl = $"{hostname}/{FAILED_URL}",
+                    ReturnUrl = $"{hostname}/{SUCCESS_URL}"
                 },
                 Payer = new Payer()
                 {
