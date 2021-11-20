@@ -15,10 +15,8 @@ namespace Demo.Models
         public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
         public int? BranchId { get; set; }
-        public int? CredentialId { get; set; }
 
         public virtual Branch Branch { get; set; }
-        public virtual Credential Credential { get; set; }
         public virtual ICollection<CustomerPolicy> CustomerPolicies { get; set; }
     }
 }

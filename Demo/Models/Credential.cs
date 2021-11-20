@@ -7,7 +7,6 @@ namespace Demo.Models
     {
         public Credential()
         {
-            Agents = new HashSet<Agent>();
             Customers = new HashSet<Customer>();
         }
 
@@ -17,9 +16,10 @@ namespace Demo.Models
         public bool? Status { get; set; }
         public int? RoleId { get; set; }
         public string ActivationCode { get; set; }
+        public int? BranchId { get; set; }
 
+        public virtual Branch Branch { get; set; }
         public virtual Role Role { get; set; }
-        public virtual ICollection<Agent> Agents { get; set; }
         public virtual ICollection<Customer> Customers { get; set; }
     }
 }

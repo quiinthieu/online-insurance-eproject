@@ -8,6 +8,7 @@ namespace Demo.Models
         public Branch()
         {
             Agents = new HashSet<Agent>();
+            Credentials = new HashSet<Credential>();
         }
 
         public int Id { get; set; }
@@ -19,5 +20,6 @@ namespace Demo.Models
         public string ZipCode { get; set; }
 
         public virtual ICollection<Agent> Agents { get; set; }
+        public virtual ICollection<Credential> Credentials { get; set; }
     }
 }

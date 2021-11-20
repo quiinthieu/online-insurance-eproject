@@ -31,7 +31,6 @@ namespace Demo.Services
                 a.Birthday,
                 a.Gender,
                 a.BranchId,
-                a.CredentialId,
             }).ToList();
         }
 
@@ -44,7 +43,6 @@ namespace Demo.Services
                 a.Birthday,
                 a.Gender,
                 a.BranchId,
-                a.CredentialId,
             }).ToList().SingleOrDefault(a => a.Id == id);
         }
 
@@ -58,7 +56,6 @@ namespace Demo.Services
                 agentToUpdate.Birthday = agent.Birthday; 
                 agentToUpdate.Gender = agent.Gender; 
                 agentToUpdate.BranchId = agent.BranchId; 
-                agentToUpdate.CredentialId = agent.CredentialId;
                 _databaseContext.Entry(agentToUpdate).State = EntityState.Modified;
                 return agentToUpdate;
             }
