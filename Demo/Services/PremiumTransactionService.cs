@@ -20,6 +20,9 @@ namespace Demo.Services
 			{
 				premiumTransaction.Id,
 				premiumTransaction.CustomerPolicyId,
+				PolicyName = premiumTransaction.CustomerPolicy.Policy.Name,
+				PolicyTerm = premiumTransaction.CustomerPolicy.Policy.Term,
+
 				premiumTransaction.Amount,
 				premiumTransaction.PaidDate,
 				premiumTransaction.DueDate
@@ -65,15 +68,35 @@ namespace Demo.Services
 
 		public dynamic FindByCustomerPolicyId(int customerPolicyId)
 		{
-			return _databaseContext.PremiumTransactions.Select(premiumTransaction => new
+
+			var transactions = _databaseContext.PremiumTransactions.Where(premiumTransaction => premiumTransaction.CustomerPolicyId == customerPolicyId).Select(premiumTransaction => new
 			{
 				premiumTransaction.Id,
 				premiumTransaction.CustomerPolicyId,
+<<<<<<< HEAD
+				PolicyName = premiumTransaction.CustomerPolicy.Policy.Name,
+				PolicyTerm = premiumTransaction.CustomerPolicy.Policy.Term,
+				premiumTransaction.Amount,
+				premiumTransaction.PaidDate,
+				premiumTransaction.DueDate,
+			}).ToList();
+
+			var total = _databaseContext.PremiumTransactions.Where(premiumTransaction => premiumTransaction.CustomerPolicyId == customerPolicyId).Sum(trans => trans.Amount);
+
+			return new
+			{
+				transactions,
+				total
+			};
+				
+			
+=======
 				premiumTransaction.CustomerPolicy.Policy.InsuranceType.Name,
 				premiumTransaction.Amount,
 				premiumTransaction.PaidDate,
 				premiumTransaction.DueDate
 			}).Where(premiumTransaction => premiumTransaction.CustomerPolicyId == customerPolicyId).OrderBy(p => p.Id);
+>>>>>>> fd8e22730fef03cf8054d8525f7c9449c2d245c8
 		}
 
         public dynamic FindByCustomerId(int customerId)

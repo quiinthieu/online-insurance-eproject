@@ -46,6 +46,8 @@ namespace Demo.Services
             }).ToList().SingleOrDefault(a => a.Id == id);
         }
 
+
+
         public Agent Update(int id, Agent agent)
         {
             //var agentToUpdate = _databaseContext.Agents.AsNoTracking().SingleOrDefault(a => a.Id == id);
@@ -65,6 +67,18 @@ namespace Demo.Services
         public int Count()
         {
             return _databaseContext.Agents.Count();
+        }
+
+        public dynamic FindByBranchId(int id)
+        {
+            return _databaseContext.Agents.AsNoTracking().Select(a => new
+            {
+                a.Id,
+                a.Name,
+                a.Birthday,
+                a.Gender,
+                a.BranchId,
+            }).ToList().SingleOrDefault(a => a.BranchId == id);
         }
     }
 }

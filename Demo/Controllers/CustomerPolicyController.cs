@@ -17,14 +17,20 @@ namespace Demo.Controllers
         private ICustomerService _customerService;
         private IPolicyService _policyService;
         private IPremiumTransactionService _premiumTransactService;
+        private IAgentService _agentService;
+        private ICredentialService _credentialService;
+        private IClaimService _claimService;
 
 
-        public CustomerPolicyController(ICustomerPolicyService customerPolicyService, IPolicyService policyService, ICustomerService customerService, IPremiumTransactionService premiumTransactService)
+        public CustomerPolicyController(IClaimService claimService,ICredentialService credentialService,IAgentService agentService,ICustomerPolicyService customerPolicyService, IPolicyService policyService, ICustomerService customerService, IPremiumTransactionService premiumTransactService)
         {
             _customerPolicyService = customerPolicyService;
             _policyService = policyService;
             _customerService = customerService;
             _premiumTransactService = premiumTransactService;
+            _agentService = agentService;
+            _credentialService = credentialService;
+            _claimService = claimService;
         }
 
         [HttpGet("all-customer-policies")]
@@ -76,9 +82,9 @@ namespace Demo.Controllers
         [Consumes("application/json")]
         public IActionResult Create([FromBody] BuyPolicy customerPolicy)
         {
-            try
-            {
-                var AGENT_ID = 2;
+           /* try
+            {*/
+                var AGENT_ID = 1;
 
                _customerService.Update(customerPolicy.Id, new Customer
             {
@@ -118,7 +124,7 @@ namespace Demo.Controllers
 
 
                 // Gan customer
-                dynamic loginAccount = HttpContext.Items["credential"];
+                /*dynamic loginAccount = HttpContext.Items["credential"];*/
 
                     int credenId = customerPolicy.CredentialId;
 
@@ -127,14 +133,24 @@ namespace Demo.Controllers
                     int customerId = customer.Id;
 
                     cusPolicy.CustomerId = customerId;
-                    cusPolicy.AgentId = AGENT_ID;
+
+                    dynamic cre = _credentialService.FindById(credenId);
+                    cusPolicy.AgentId = _agentService.FindByBranchId(cre.BranchId).Id;
 
                 // Them customerpolicy
-                    _customerPolicyService.Create(cusPolicy);
+                   var createdCusPolicy =   _customerPolicyService.Create(cusPolicy);
 
                     var pts = PremiumHelper.PremiumTransactionScheludler(term, cusPolicy);
 
-                    _premiumTransactService.Create(pts);
+                   var transaction =  _premiumTransactService.Create(pts);
+
+                    var totalTrans = transaction.Sum(trans => trans.Amount);
+                    var rateTrans = (decimal) ((policy.InterestRate/100)+1);
+                    //create claim
+                    var claim = new Claim();
+                    claim.CustomerPolicyId = createdCusPolicy.Id;
+                    claim.Amount = totalTrans * rateTrans;
+                    _claimService.Create(claim);
                 });
 
 
@@ -142,11 +158,11 @@ namespace Demo.Controllers
             {
                 msg = "Successfully added"
             });
-            }
+        /*    }
             catch (Exception ex)
             {
                 return BadRequest();
-            }
+            }*/
         }
 
         [HttpGet("count")]
