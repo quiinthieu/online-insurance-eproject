@@ -77,7 +77,6 @@ namespace Demo.Controllers
                     }
                 }
 
-<<<<<<< HEAD
 
                 /*  return Redirect(paypalRedirectUrl);*/
                 return Ok(
@@ -85,14 +84,6 @@ namespace Demo.Controllers
                     {
                         path = paypalRedirectUrl
                     });
-=======
-                // return Redirect(paypalRedirectUrl);
-
-                return Ok(new
-                {
-                    path = paypalRedirectUrl
-                });
->>>>>>> fd8e22730fef03cf8054d8525f7c9449c2d245c8
             }
             catch (HttpException httpException)
             {
