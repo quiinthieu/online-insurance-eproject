@@ -31,7 +31,8 @@ namespace Demo.Controllers
 
         [HttpPost("check-out")]
         [Produces("application/json")]
-        public async Task<IActionResult> PaypalCheckout(List<PremiumTransaction> transactions)
+        [Consumes("application/json")]
+        public async Task<IActionResult> PaypalCheckout([FromBody] List<PremiumTransaction> transactions)
         {
             var hostname = _configuration["Client:ReturnUrl"].ToString();
             /*    var hostname = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";*/
@@ -76,6 +77,7 @@ namespace Demo.Controllers
                     }
                 }
 
+<<<<<<< HEAD
 
                 /*  return Redirect(paypalRedirectUrl);*/
                 return Ok(
@@ -83,6 +85,14 @@ namespace Demo.Controllers
                     {
                         path = paypalRedirectUrl
                     });
+=======
+                // return Redirect(paypalRedirectUrl);
+
+                return Ok(new
+                {
+                    path = paypalRedirectUrl
+                });
+>>>>>>> fd8e22730fef03cf8054d8525f7c9449c2d245c8
             }
             catch (HttpException httpException)
             {

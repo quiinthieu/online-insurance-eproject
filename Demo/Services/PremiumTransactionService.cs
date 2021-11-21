@@ -73,6 +73,7 @@ namespace Demo.Services
 			{
 				premiumTransaction.Id,
 				premiumTransaction.CustomerPolicyId,
+<<<<<<< HEAD
 				PolicyName = premiumTransaction.CustomerPolicy.Policy.Name,
 				PolicyTerm = premiumTransaction.CustomerPolicy.Policy.Term,
 				premiumTransaction.Amount,
@@ -89,6 +90,13 @@ namespace Demo.Services
 			};
 				
 			
+=======
+				premiumTransaction.CustomerPolicy.Policy.InsuranceType.Name,
+				premiumTransaction.Amount,
+				premiumTransaction.PaidDate,
+				premiumTransaction.DueDate
+			}).Where(premiumTransaction => premiumTransaction.CustomerPolicyId == customerPolicyId).OrderBy(p => p.Id);
+>>>>>>> fd8e22730fef03cf8054d8525f7c9449c2d245c8
 		}
 
         public dynamic FindByCustomerId(int customerId)
