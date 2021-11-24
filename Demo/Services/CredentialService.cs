@@ -22,6 +22,11 @@ namespace Demo.Services
             _roleService = roleService;
         }
 
+        public dynamic FindCustomerByCredentialId(int id)
+        {
+            return _databaseContext.Customers.SingleOrDefault(c => c.CredentialId == id);
+        }
+
         // Used to check user's credential before logging in
         public dynamic FindByEmailAndPassword(string email, string password)
         {
@@ -43,8 +48,10 @@ namespace Demo.Services
                         credential.RoleId,
                         RoleName = credential.Role.Name,
                         credential.ActivationCode,
-                        credential.Customers,
-                        BranchId = credential.BranchId
+                        //credential.Customers,
+                        BranchId = credential.BranchId,
+                        //CustomerId = credential.Customers.Id,
+                        //CustomerName = credential.Customers[0].Name
                     };
                 }
                 else

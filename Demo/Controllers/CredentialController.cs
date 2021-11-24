@@ -76,11 +76,25 @@ namespace Demo.Controllers
                 throw new UnauthorizedAccessException("Account Inactivated");
             }
 
+            dynamic customer = _credentialService.FindCustomerByCredentialId(credential.Id);
+
+            dynamic returnCredential = new
+            {
+                credential.Id,
+                credential.Email,
+                credential.RoleName,
+                credential.Status,
+                CustomerId = customer.Id,
+                CustomerName = customer.Name
+            };
+
+
+
             return Ok(
                 new
                 {
                     accessToken = Base64Helper.Base64Encode($"{logedinAccount.Email}:{logedinAccount.Password}"),
-                    credential
+                    credential = returnCredential
                 });
         }
 
