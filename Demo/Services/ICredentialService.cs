@@ -21,6 +21,8 @@ namespace Demo.Services
 
 		public dynamic FindById(int id);
 
+		public dynamic FindCustomerByCredentialId(int id);
+
 		public dynamic FindByActivationCodeAndEmail(string activationCode,string email);
 		public IEnumerable<Claim> GetUserClaims(dynamic credential);//chua 1 phan thong tin tai khoan
 
