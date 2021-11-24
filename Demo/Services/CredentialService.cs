@@ -174,7 +174,17 @@ namespace Demo.Services
 
         public dynamic FindByActivationCodeAndEmail(string activationCode, string email)
         {
-            return _databaseContext.Credentials.SingleOrDefault(cre => cre.ActivationCode == activationCode && cre.Email == email);
+            return _databaseContext.Credentials.Select(credential => new 
+            {
+                credential.Id,
+                credential.Email,
+                credential.Password,
+                credential.Status,
+                credential.RoleId,
+                RoleName = credential.Role.Name,
+                credential.ActivationCode,
+                BranchId = credential.BranchId
+            }).SingleOrDefault(cre => cre.ActivationCode == activationCode && cre.Email == email);
         }
 
         public int Count()
