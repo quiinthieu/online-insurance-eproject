@@ -1,7 +1,9 @@
 ﻿using System;
 using Demo.Models;
 using Demo.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Demo.Controllers
 {
@@ -10,10 +12,11 @@ namespace Demo.Controllers
 	public class CustomerController : Controller
 	{
 		private ICustomerService _customerService;
-
-		public CustomerController(ICustomerService customerService)
+		private IConfiguration _configuration;
+		public CustomerController(ICustomerService customerService, IConfiguration configuration)
 		{
 			_customerService = customerService;
+			_configuration = configuration;
 		}
 		
 		[HttpGet("all-customers")]
@@ -44,6 +47,7 @@ namespace Demo.Controllers
 			}
 		}
 
+		//[Authorize]
 		[HttpGet("customer-details-by-credential-id/{id}")]
 		[Produces("application/json")]
 		public IActionResult FindByCredentialId(int id)
@@ -89,5 +93,28 @@ namespace Demo.Controllers
 				return BadRequest();
 			}
 		}
+
+		[HttpPost("send-contact")]
+		[Produces("application/json")]
+		[Consumes("application/json")]
+		public IActionResult SendContact([FromBody] Contact contactForm)
+        {
+            try
+            {
+				var mailHelper = new Helpers.MailHelper(_configuration);
+				var subject = "More information about online insurance";
+				var body = "Hi " + contactForm.FirstName + " " + contactForm.LastName + ". We appreciate your cooperation. Click the link down below for details !";
+				var attachment = "https://www.hdfcergo.com/blogs/general-insurance/5-amazing-benefits-of-online-insurance";
+				mailHelper.Send(_configuration["Gmail:Username"], contactForm.Email, subject, body, attachment);
+				return Ok(new
+				{
+					msg = "Success"
+				});
+            }
+            catch (Exception ex)
+            {
+				return null;
+            }
+        }
 	}
 }
