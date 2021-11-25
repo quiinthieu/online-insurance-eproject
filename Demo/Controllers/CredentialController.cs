@@ -28,6 +28,52 @@ namespace Demo.Controllers
             _customerService = customerService;
         }
 
+        //FindAll
+        [HttpGet("find-all")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult FindAll()
+        {
+            try
+            {
+                return Ok(_credentialService.FindAll());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+
+        }
+
+        //update
+        [HttpPut("update/{id}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult Update([FromBody] Credential updateCre, int id)
+        {
+            try
+            {
+                var cre = _credentialService.FindById(id);
+                var updatedCredential = _credentialService.Update(new Credential
+                {
+                    Email = updateCre.Email,
+                    Password = updateCre.Password,
+                    Status = updateCre.Status,
+                    RoleId = updateCre.RoleId,
+                    ActivationCode = updateCre.ActivationCode
+                });
+                return Ok(updatedCredential);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+
+
         // Register a new account
         [HttpPost("register")]
         [Consumes("application/json")]
@@ -45,7 +91,7 @@ namespace Demo.Controllers
             var customer = _customerService.Create(new Customer
             {
                 Name = register.Name,
-            /*    Birthday = register.Birthday,*/
+                /*    Birthday = register.Birthday,*/
                 Gender = register.Gender,
                 Street = register.Street,
                 City = register.City,
@@ -248,7 +294,7 @@ namespace Demo.Controllers
 
             return Ok(credential);
         }
-        
+
         [HttpGet("count")]
         [Produces("application/json")]
         public IActionResult Count()
