@@ -19,7 +19,13 @@ namespace Demo.Services
         {
             _databaseContext.InsuranceTypes.Add(insuranceType);
             _databaseContext.SaveChanges();
-            return insuranceType;
+
+            return new {
+                insuranceType.Id,
+                insuranceType.Name,
+                insuranceType.Description,
+
+            } ;
         }
 
         public dynamic FindAll()
@@ -48,7 +54,14 @@ namespace Demo.Services
             _databaseContext.InsuranceTypes.Add(insuranceType);
             _databaseContext.Entry(insuranceType).State = EntityState.Modified;
             _databaseContext.SaveChanges();
-            return insuranceType;
+
+            return new
+            {
+                insuranceType.Id,
+                insuranceType.Name,
+                insuranceType.Description,
+
+            };
         }
 
         public int Count()

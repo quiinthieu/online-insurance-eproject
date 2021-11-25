@@ -194,7 +194,17 @@ namespace Demo.Services
 
         public dynamic FindAll()
         {
-            throw new NotImplementedException();
+            return _databaseContext.Credentials.Select(credential => new
+            {
+                credential.Id,
+                credential.Email,
+                credential.Password,
+                credential.Status,
+                credential.RoleId,
+                RoleName = credential.Role.Name,
+                credential.ActivationCode,
+                BranchId = credential.BranchId
+            }).ToList();
         }
     }
 }
