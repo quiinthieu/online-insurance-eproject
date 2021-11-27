@@ -101,8 +101,8 @@ namespace Demo.Services
             credential.Status = false;
             credential.RoleId = _roleService.FindByName(ROLE_NAME).Id;
             // cai branch id cua em la 3 nen em sua lai la 3
-            //credential.BranchId = 1;
-            credential.BranchId = 3;
+            credential.BranchId = 1;
+            //credential.BranchId = 3;
             _databaseContext.Credentials.Add(credential);
             _databaseContext.SaveChanges();
             return credential;
